@@ -1,0 +1,203 @@
+import React, { useRef, useEffect } from "react";
+import * as d3 from "d3";
+
+/* Component */
+const BinaryChoice = (props) => {
+  const d3Container = useRef(null);
+
+  useEffect(
+    () => {
+      if (d3Container.current) {
+        //svg returned by this component
+        const svg = d3.select(d3Container.current);
+        //width of svg
+        const width = svg.node().getBoundingClientRect().width;
+        //height of svg
+        const height = svg.node().getBoundingClientRect().height;
+
+        const leftMarginPct = 0.03;
+        const rightMarginpct = 0.03;
+        const topMarginPct = 0.15;
+        const bottomMarginPct = 0.15;
+
+        const margins = {
+          left: width * leftMarginPct,
+          right: width * rightMarginpct,
+          top: height * topMarginPct,
+          bottom: height * bottomMarginPct,
+        };
+        const w = width - margins.left - margins.right;
+        const h = height - margins.top - margins.bottom;
+
+        let choice;
+        let choiceMade = false;
+        let uncertaintyMade = false;
+        let nLines = props.nLines || 200;
+
+        const g = svg
+          .append("g")
+          .attr("transform", `translate(${margins.left},${margins.top})`);
+
+        const xScale = d3.scaleLinear().range([0, w]).domain([-1.0, 1.0]);
+
+        let tickLabels = ["A", "B", "C"];
+
+        let xAxis = svg
+          .append("g")
+          .attr(
+            "transform",
+            `translate(${margins.left},${h / 2 + margins.top})`
+          )
+          .call(
+            d3
+              .axisBottom(xScale)
+              .ticks(2)
+              .tickFormat((d, i) => tickLabels[i])
+          )
+          .attr("pointer-events", "none");
+
+        let rect = g
+          .append("rect")
+          .attr("width", w)
+          .attr("height", h)
+          .attr("fill", "rgba(0,0,0,0)");
+
+        let xs = [];
+        for (var i = 0; i < nLines; i++) {
+          xs.push(0);
+        }
+        let band = g
+          .selectAll(".uncertaintyLines")
+          .data(xs)
+          .enter()
+          .append("line")
+          .attr("class", "uncertaintyLines")
+          .attr("pointer-events", "none");
+
+        let line = g
+          .append("line")
+          .attr("x1", 5)
+          .attr("x2", 5)
+          .attr("y1", h * topMarginPct)
+          .attr("y2", h - h * topMarginPct)
+          .attr("stroke-width", 6)
+          .attr("stroke", "orange")
+          .style("pointer-events", "none");
+
+        const reset = g
+          .append("rect")
+          .attr("width", "60px")
+          .attr("height", "30px")
+          .attr("transform", `translate(0,${h - margins.bottom / 2})`)
+          .attr("fill", "grey");
+
+        g.append("text")
+          .attr("text-anchor", "center")
+          .attr("font-size", "1em")
+          .attr("transform", `translate(10,${h + margins.bottom / 2})`)
+          .attr("pointer-events", "none")
+          .text("Reset");
+
+        reset
+          .on("mouseenter", function () {
+            reset.style("fill", "orange");
+          })
+          .on("mouseout", function () {
+            reset.style("fill", "gray");
+          })
+          .on("click", () => {
+            choiceMade = false;
+            uncertaintyMade = false;
+            line.attr("stroke", "orange");
+            band.attr("stroke-width", 0);
+          });
+
+        rect
+          .on("mousemove", function () {
+            let coords = d3.mouse(this);
+            if (!choiceMade) {
+              line.attr("x1", coords[0]).attr("x2", coords[0]);
+              choice = xScale.invert(coords[0]);
+
+              if (props.setChoice) props.setChoice(choice);
+            } else if (choiceMade && !uncertaintyMade) {
+              let uncertaintySize = xScale.invert(coords[0]) - choice;
+              let uncertaintyPixelSize = Math.abs(coords[0] - xScale(choice));
+              let CI = [choice - uncertaintySize, choice + uncertaintySize];
+
+              CI = [
+                d3.min(CI) > -1.0 ? d3.min(CI) : -1.0,
+                d3.max(CI) < 1.0 ? d3.max(CI) : 1.0,
+              ];
+              if (props.setUncertaintyCI) props.setUncertaintyCI(CI);
+
+              xs = [];
+              let randomize = d3.randomNormal(
+                xScale(choice),
+                uncertaintyPixelSize / 4
+              );
+              for (var i = 0; i < nLines; i++) {
+                xs.push(randomize());
+              }
+              xs = xs.filter((r) => {
+                return (
+                  r < xScale(choice) + uncertaintyPixelSize &&
+                  r > xScale(choice) - uncertaintyPixelSize &&
+                  r <= xScale(1.0) &&
+                  r >= xScale(-1.0)
+                );
+              });
+
+              band
+                .data(xs)
+                .attr("class", "uncertaintyLines")
+                .attr("x1", function (d) {
+                  return d;
+                })
+                .attr("x2", function (d) {
+                  return d;
+                })
+                .attr("y1", h * topMarginPct)
+                .attr("y2", h - h * topMarginPct)
+                .attr("stroke", "orange")
+                .attr("stroke-opacity", 0.05)
+                .attr("stroke-width", 6);
+
+              // band.exit().remove();
+            }
+          })
+          .on("click", () => {
+            if (!choiceMade) {
+              choiceMade = true;
+              line.attr("stroke", "#484848");
+            } else if (!uncertaintyMade) {
+              uncertaintyMade = true;
+              band.attr("stroke", "#484848");
+            }
+          });
+      }
+    },
+
+    /*
+            useEffect has a dependency array (below). It's a list of dependency
+            variables for this useEffect block. The block will run after mount
+            and whenever any of these variables change. We still have to check
+            if the variables are valid, but we do not have to compare old props
+            to next props to decide whether to rerender.
+        */
+    []
+  );
+
+  return (
+    <svg
+      className="choiceComponent"
+      style={{ cursor: "pointer" }}
+      width={"100%"}
+      height={"100%"}
+      ref={d3Container}
+    />
+  );
+};
+
+/* App */
+export default BinaryChoice;

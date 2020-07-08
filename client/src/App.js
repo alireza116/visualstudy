@@ -1,77 +1,61 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
+import NavBar from "./components/nav/nav";
+import Container from "@material-ui/core/Container";
+import BottomNav from "./components/bottomNav/bottomNav";
 
-import logo from "./logo.svg";
+import { makeStyles } from "@material-ui/core/styles";
+import StudyPage from "./pages/study/study";
+import axios from "axios";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 
-class App extends Component {
-  state = {
-    response: "",
-    post: "",
-    responseToPost: "",
-  };
+const App = () => {
+  // class App extends Component {
+  // const classes = useStyles();
+  // const history = useHistory();
 
-  componentDidMount() {
-    this.callApi()
-      .then((res) => this.setState({ response: res.express }))
-      .catch((err) => console.log(err));
-  }
+  const [choice, setChoice] = useState(0);
+  const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
+  return (
+    <div className="app" style={{ height: "100%", overflow: "auto" }}>
+      <Router>
+        <NavBar height={"7%"} className="navBar"></NavBar>
+        <Container style={{ height: "86%", margin: 0 }}>
+          <Switch>
+            <Route path="/consent" component={Consent}></Route>
+            <Route path="/pre" component={Pre}></Route>
+            <Route path="/study">
+              <StudyPage
+                setChoice={setChoice}
+                setUncertaintyCI={setUncertaintyCI}
+                choice={choice}
+                uncertaintyCI={uncertaintyCI}
+              ></StudyPage>
+            </Route>
+            <Route path="/post" component={Post}></Route>
+          </Switch>
+        </Container>
+        <BottomNav height="7%"></BottomNav>
+      </Router>
+    </div>
+  );
+};
 
-  callApi = async () => {
-    const response = await fetch("/api/hello");
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
+const Consent = () => {
+  return <p className="test">consent</p>;
+};
 
-    return body;
-  };
+const Pre = () => {
+  return <p className="test">Pre</p>;
+};
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch("/api/world", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ post: this.state.post }),
-    });
-    const body = await response.text();
+// const Study = () => {
+//   return <p className="test">Study</p>;
+// };
 
-    this.setState({ responseToPost: body });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        <p>{this.state.response}</p>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={(e) => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <p>{this.state.responseToPost}</p>
-      </div>
-    );
-  }
-}
+const Post = () => {
+  return <p className="test">Post</p>;
+};
 
 export default App;
