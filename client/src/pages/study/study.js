@@ -54,7 +54,7 @@ const StudyPage = (props) => {
     async function fetchData() {
       const result = await axios("/study/getData");
       // console.log(result.data);
-      let d = result.data.sort((a, b) => +b["dpfc_angry"] - +a["dpfc_angry"]);
+      let d = result.data.sort((a, b) => +a["dpfc_angry"] - +b["dpfc_angry"]);
       console.log(d);
       setData(d);
     }

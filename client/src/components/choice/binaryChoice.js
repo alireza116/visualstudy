@@ -34,9 +34,13 @@ const BinaryChoice = (props) => {
         let uncertaintyMade = false;
         let nLines = props.nLines || 100;
 
+        let qText = props.text || "how suspicious is this tweet?";
+
         const g = svg
           .append("g")
           .attr("transform", `translate(${margins.left},${margins.top})`);
+
+        const text = g.append("text").text(qText);
 
         const xScale = d3.scaleLinear().range([0, w]).domain([-1.0, 1.0]);
 
@@ -134,7 +138,7 @@ const BinaryChoice = (props) => {
               xs = [];
               let randomize = d3.randomNormal(
                 xScale(choice),
-                uncertaintyPixelSize / 4
+                uncertaintyPixelSize / 2
               );
               for (var i = 0; i < nLines; i++) {
                 xs.push(randomize());

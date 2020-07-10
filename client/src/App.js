@@ -11,10 +11,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 const App = () => {
-  // class App extends Component {
-  // const classes = useStyles();
-  // const history = useHistory();
-
   const [choice, setChoice] = useState(0);
   const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
   return (
@@ -49,10 +45,6 @@ const Consent = () => {
 const Pre = () => {
   return <p className="test">Pre</p>;
 };
-
-// const Study = () => {
-//   return <p className="test">Study</p>;
-// };
 
 const Post = () => {
   return <p className="test">Post</p>;
