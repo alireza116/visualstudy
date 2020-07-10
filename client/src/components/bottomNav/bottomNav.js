@@ -8,6 +8,7 @@ const useStyles = makeStyles({
   bottomNav: {
     width: "100%",
     height: "7%",
+    backgroundColor: "orange",
     // position: "fixed",
     // bottom: 0,
   },

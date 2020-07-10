@@ -15,8 +15,8 @@ const BinaryChoice = (props) => {
         //height of svg
         const height = svg.node().getBoundingClientRect().height;
 
-        const leftMarginPct = 0.03;
-        const rightMarginpct = 0.03;
+        const leftMarginPct = 0.08;
+        const rightMarginpct = 0.08;
         const topMarginPct = 0.15;
         const bottomMarginPct = 0.15;
 
@@ -32,7 +32,7 @@ const BinaryChoice = (props) => {
         let choice;
         let choiceMade = false;
         let uncertaintyMade = false;
-        let nLines = props.nLines || 200;
+        let nLines = props.nLines || 100;
 
         const g = svg
           .append("g")
@@ -40,7 +40,7 @@ const BinaryChoice = (props) => {
 
         const xScale = d3.scaleLinear().range([0, w]).domain([-1.0, 1.0]);
 
-        let tickLabels = ["A", "B", "C"];
+        let tickLabels = props.tickLabels || ["A", "B", "C"];
 
         let xAxis = svg
           .append("g")
@@ -189,13 +189,23 @@ const BinaryChoice = (props) => {
   );
 
   return (
-    <svg
-      className="choiceComponent"
-      style={{ cursor: "pointer" }}
-      width={"100%"}
-      height={"100%"}
-      ref={d3Container}
-    />
+    <div
+      className="choiceContainer"
+      style={{
+        width: "50%",
+        height: "15%",
+        margin: "0 auto",
+        marginBottom: "10px",
+      }}
+    >
+      <svg
+        className="choiceComponent"
+        style={{ cursor: "pointer" }}
+        width={"100%"}
+        height={"100%"}
+        ref={d3Container}
+      />
+    </div>
   );
 };
 
