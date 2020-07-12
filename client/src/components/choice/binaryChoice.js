@@ -4,7 +4,10 @@ import * as d3 from "d3";
 /* Component */
 const BinaryChoice = (props) => {
   const d3Container = useRef(null);
-
+  const width = props.width || "50%";
+  const height = props.height || "18%";
+  console.log(width);
+  console.log(height);
   useEffect(
     () => {
       if (d3Container.current) {
@@ -35,7 +38,7 @@ const BinaryChoice = (props) => {
         let uncertaintyMade = false;
         let nLines = props.nLines || 100;
 
-        let qText = props.text || "how suspicious is this tweet?";
+        let qText = props.question || "how suspicious is this tweet?";
 
         const g = svg
           .append("g")
@@ -204,8 +207,8 @@ const BinaryChoice = (props) => {
     <div
       className="choiceContainer"
       style={{
-        width: "50%",
-        height: "15%",
+        width: width,
+        height: height,
         margin: "0 auto",
         marginBottom: "10px",
       }}

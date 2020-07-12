@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import BinaryChoice from "../../components/choice/binaryChoice";
+import DecisionDialog from "../../components/dialog/decisionDialog";
 import Tweet from "../../components/tweet/tweet";
-import { Button, Divider, Dialog } from "@material-ui/core";
+import { Button, Divider, Switch } from "@material-ui/core";
 import $ from "jquery";
-import Switch from "@material-ui/core/Switch";
 
 // let index = 0;
 
@@ -14,6 +14,8 @@ const StudyPage = (props) => {
   const [data, setData] = useState([]);
   const [choiceContent, setChoiceContent] = useState([]);
   const [happySort, setHappySort] = useState(true);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [responses, setResponses] = useState({});
   const divContainer = useRef(null);
 
   const handleResponse = (response, index) => {
@@ -21,7 +23,7 @@ const StudyPage = (props) => {
     // console.log(response);
     response.index = index;
     // let responsesCopy = { ...props.responses };
-    props.setResponses((responses) => {
+    setResponses((responses) => {
       responses[index] = response;
       return responses;
     });
@@ -42,8 +44,17 @@ const StudyPage = (props) => {
     setAnswerCount(0);
   };
 
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = (value) => {
+    setOpenDialog(false);
+  };
+
   const handleDecision = () => {
-    console.log(props.responses);
+    console.log(responses);
+    handleClickOpen();
   };
 
   const scrollToBottom = () => {
@@ -160,6 +171,7 @@ const StudyPage = (props) => {
           Make a Decision
         </Button>
       </div>
+      <DecisionDialog open={openDialog} onClose={handleClose}></DecisionDialog>
     </div>
   );
 };
