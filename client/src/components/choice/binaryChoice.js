@@ -30,6 +30,7 @@ const BinaryChoice = (props) => {
         const h = height - margins.top - margins.bottom;
 
         let choice;
+        let CI;
         let choiceMade = false;
         let uncertaintyMade = false;
         let nLines = props.nLines || 100;
@@ -127,13 +128,12 @@ const BinaryChoice = (props) => {
             } else if (choiceMade && !uncertaintyMade) {
               let uncertaintySize = xScale.invert(coords[0]) - choice;
               let uncertaintyPixelSize = Math.abs(coords[0] - xScale(choice));
-              let CI = [choice - uncertaintySize, choice + uncertaintySize];
+              CI = [choice - uncertaintySize, choice + uncertaintySize];
 
               CI = [
                 d3.min(CI) > -1.0 ? d3.min(CI) : -1.0,
                 d3.max(CI) < 1.0 ? d3.max(CI) : 1.0,
               ];
-              if (props.setUncertaintyCI) props.setUncertaintyCI(CI);
 
               xs = [];
               let randomize = d3.randomNormal(
@@ -177,6 +177,14 @@ const BinaryChoice = (props) => {
             } else if (!uncertaintyMade) {
               uncertaintyMade = true;
               band.attr("stroke", "#484848");
+              if (props.handleResponse)
+                props.handleResponse(
+                  {
+                    CI: CI,
+                    choice: choice,
+                  },
+                  props.responseIndex
+                );
             }
           });
       }

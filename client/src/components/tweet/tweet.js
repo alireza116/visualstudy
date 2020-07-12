@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 const Tweet = (props) => {
-  console.log(props.text);
+  //   console.log(props.text);
   const classes = useStyles();
   return (
     <Card className={classes.tweetCard}>

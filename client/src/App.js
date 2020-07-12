@@ -11,8 +11,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 const App = () => {
-  const [choice, setChoice] = useState(0);
-  const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
+  // const [choice, setChoice] = useState(0);
+  // const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
+  const [responses, setResponses] = useState({});
   return (
     <div className="app" style={{ height: "100%", overflow: "auto" }}>
       <Router>
@@ -23,10 +24,12 @@ const App = () => {
             <Route path="/pre" component={Pre}></Route>
             <Route path="/study">
               <StudyPage
-                setChoice={setChoice}
-                setUncertaintyCI={setUncertaintyCI}
-                choice={choice}
-                uncertaintyCI={uncertaintyCI}
+                responses={responses}
+                setResponses={setResponses}
+                // setChoice={setChoice}
+                // setUncertaintyCI={setUncertaintyCI}
+                // choice={choice}
+                // uncertaintyCI={uncertaintyCI}
               ></StudyPage>
             </Route>
             <Route path="/post" component={Post}></Route>

@@ -2,26 +2,59 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import BinaryChoice from "../../components/choice/binaryChoice";
 import Tweet from "../../components/tweet/tweet";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Divider, Dialog } from "@material-ui/core";
 import $ from "jquery";
+import Switch from "@material-ui/core/Switch";
+
+// let index = 0;
 
 const StudyPage = (props) => {
   //   console.log(props.setChoice);
   const [answerCount, setAnswerCount] = useState(0);
   const [data, setData] = useState([]);
-  const divContainer = useRef(null);
   const [choiceContent, setChoiceContent] = useState([]);
+  const [happySort, setHappySort] = useState(true);
+  const divContainer = useRef(null);
+
+  const handleResponse = (response, index) => {
+    console.log(index);
+    // console.log(response);
+    response.index = index;
+    // let responsesCopy = { ...props.responses };
+    props.setResponses((responses) => {
+      responses[index] = response;
+      return responses;
+    });
+
+    // });
+  };
+
+  const handleSort = (event) => {
+    setHappySort(event.target.checked);
+    let d;
+    if (event.target.checked) {
+      d = [...data].sort((a, b) => +b["dpfc_happy"] - +a["dpfc_happy"]);
+    } else {
+      d = [...data].sort((a, b) => +b["dpfc_angry"] - +a["dpfc_angry"]);
+    }
+    setData(d);
+    setChoiceContent([]);
+    setAnswerCount(0);
+  };
+
+  const handleDecision = () => {
+    console.log(props.responses);
+  };
 
   const scrollToBottom = () => {
     if (divContainer.current) {
-      // divContainer.current.scrollTop = divContainer.current.scrollHeight;
-      // divContainer.current.scrollIntoView({ behavior: "smooth" });
       $(divContainer.current).animate(
         { scrollTop: divContainer.current.scrollHeight },
         500
       );
     }
   };
+
   useEffect(() => {
     if (divContainer.current) {
       scrollToBottom();
@@ -29,6 +62,7 @@ const StudyPage = (props) => {
   }, [answerCount]);
 
   const addContent = () => {
+    let index = answerCount;
     let content = [
       ...choiceContent,
       <Tweet
@@ -36,31 +70,42 @@ const StudyPage = (props) => {
         text={data[answerCount].text}
         src={`/testImages/${data[answerCount]._id}.png`}
       ></Tweet>,
+
       <BinaryChoice
-        key={`choice_${answerCount}`}
-        setChoice={props.setChoice}
-        setUncertaintyCI={props.setUncertaintyCI}
+        key={`choice_${index}`}
+        responseIndex={index}
+        handleResponse={handleResponse}
         tickLabels={["suspicious", "-", "trustworthy"]}
       ></BinaryChoice>,
       <Divider key={`divider_${answerCount}`}></Divider>,
     ];
     setChoiceContent(content);
     setAnswerCount(answerCount + 1);
+    index++;
   };
-
-  // addContent();
 
   useEffect(() => {
     async function fetchData() {
       const result = await axios("/study/getData");
       // console.log(result.data);
-      let d = result.data.sort((a, b) => +a["dpfc_angry"] - +b["dpfc_angry"]);
-      console.log(d);
+      let d;
+      if (happySort) {
+        d = result.data.sort((a, b) => +b["dpfc_happy"] - +a["dpfc_happy"]);
+      } else {
+        d = result.data.sort((a, b) => +b["dpfc_angry"] - +a["dpfc_angry"]);
+      }
       setData(d);
     }
 
     fetchData();
-  }, [answerCount]);
+  }, []);
+
+  useEffect(() => {
+    console.log("first content added");
+    if (data.length > 0) {
+      addContent();
+    }
+  }, [data]);
 
   return (
     <div
@@ -74,6 +119,8 @@ const StudyPage = (props) => {
       }}
       ref={divContainer}
     >
+      <p>Sort based on happiness?</p>
+      <Switch onChange={handleSort} checked={happySort}></Switch>
       {choiceContent}
       {/* <Tweet></Tweet>
 
@@ -108,7 +155,7 @@ const StudyPage = (props) => {
         <Button
           style={{ backgroundColor: "gray", color: "black" }}
           variant="contained"
-          onClick={addContent}
+          onClick={handleDecision}
         >
           Make a Decision
         </Button>
