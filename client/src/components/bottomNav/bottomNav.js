@@ -22,13 +22,13 @@ const BottomNav = (props) => {
   const setHistory = (newValue) => {
     history.push(newValue);
   };
-  const indexRoutemAp = {
-    0: "/",
-    1: "/pre",
-    2: "/study",
-    3: "/post",
-    4: "/debrief",
-  };
+  // const indexRoutemAp = {
+  //   0: "/",
+  //   1: "/pre",
+  //   2: "/study",
+  //   3: "/post",
+  //   4: "/debrief",
+  // };
   return (
     <BottomNavigation
       value={pageIndex}
@@ -42,9 +42,11 @@ const BottomNav = (props) => {
       style={{ height: props.height }}
     >
       <BottomNavigationAction label="Consent" value="/consent" />
+      <BottomNavigationAction label="Instructions" value="/instructions" />
       <BottomNavigationAction label="Pre-questionaire" value="/pre" />
       <BottomNavigationAction label="Study" value="/study" />
       <BottomNavigationAction label="Post" value="/post" />
+      <BottomNavigationAction label="Debrief" value="/debrief" />
     </BottomNavigation>
   );
 };

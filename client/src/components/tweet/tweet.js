@@ -6,7 +6,8 @@ const useStyles = makeStyles({
   tweetCard: {
     width: "60%",
     // height: "400px",
-    backgroundColor: "#F7F5F5",
+    backgroundColor: "white",
+    borderRadius: 0,
     margin: "0 auto",
     marginBottom: "10px",
     marginTop: "10px",
@@ -18,15 +19,17 @@ const useStyles = makeStyles({
 
 const Tweet = (props) => {
   //   console.log(props.text);
+  const showImage = props.showImage || true;
   const classes = useStyles();
+  const image = showImage ? (
+    <img src={props.src} style={{ borderRadius: 15 }} />
+  ) : null;
   return (
     <Card className={classes.tweetCard}>
       <Typography variant="body1" style={{ marginBottom: "10px" }}>
         {props.text}
       </Typography>
-      <div style={{ textAlign: "center" }}>
-        <img src={props.src} style={{ borderRadius: 15 }} />
-      </div>
+      <div style={{ textAlign: "center" }}>{image}</div>
     </Card>
   );
 };

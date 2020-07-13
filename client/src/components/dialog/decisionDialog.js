@@ -27,10 +27,8 @@ const DecisionDialog = (props) => {
   const json = {
     elements: [
       {
-        name: "age",
-        type: "text",
-        inputType: "text",
-        size: 75,
+        type: "comment",
+        name: "choiceComment",
         title: "How did you arrive to this decision?",
         isRequired: true,
       },
@@ -62,7 +60,7 @@ const DecisionDialog = (props) => {
           responseIndex={"sourceChoice"}
           handleResponse={handleResponse}
           question="how suspicious was the source?"
-          tickLabels={["suspicious", "-", "trustworthy"]}
+          tickLabels={["suspicious", "", "trustworthy"]}
           width="80%"
           height="125px"
         ></BinaryChoice>

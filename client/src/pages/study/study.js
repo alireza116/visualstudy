@@ -83,10 +83,11 @@ const StudyPage = (props) => {
       ></Tweet>,
 
       <BinaryChoice
+        choiceDomain={[0.0, 1.0]}
         key={`choice_${index}`}
         responseIndex={index}
         handleResponse={handleResponse}
-        tickLabels={["suspicious", "-", "trustworthy"]}
+        tickLabels={["suspicious", "", "trustworthy"]}
       ></BinaryChoice>,
       <Divider key={`divider_${answerCount}`}></Divider>,
     ];

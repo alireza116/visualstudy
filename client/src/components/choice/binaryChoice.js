@@ -37,7 +37,8 @@ const BinaryChoice = (props) => {
         let choiceMade = false;
         let uncertaintyMade = false;
         let nLines = props.nLines || 100;
-
+        console.log(props.choiceDomain);
+        const choiceDomain = props.choiceDomain || [-1.0, 1.0];
         let qText = props.question || "how suspicious is this tweet?";
 
         const g = svg
@@ -46,9 +47,9 @@ const BinaryChoice = (props) => {
 
         const text = g.append("text").text(qText);
 
-        const xScale = d3.scaleLinear().range([0, w]).domain([-1.0, 1.0]);
+        const xScale = d3.scaleLinear().range([0, w]).domain(choiceDomain);
 
-        let tickLabels = props.tickLabels || ["A", "B", "C"];
+        let tickLabels = props.tickLabels || ["A", "", "C"];
 
         let xAxis = svg
           .append("g")
@@ -59,7 +60,7 @@ const BinaryChoice = (props) => {
           .call(
             d3
               .axisBottom(xScale)
-              .ticks(2)
+              .ticks(tickLabels.length - 1)
               .tickFormat((d, i) => tickLabels[i])
           )
           .attr("pointer-events", "none");
@@ -134,8 +135,8 @@ const BinaryChoice = (props) => {
               CI = [choice - uncertaintySize, choice + uncertaintySize];
 
               CI = [
-                d3.min(CI) > -1.0 ? d3.min(CI) : -1.0,
-                d3.max(CI) < 1.0 ? d3.max(CI) : 1.0,
+                d3.min(CI) > choiceDomain[0] ? d3.min(CI) : choiceDomain[0],
+                d3.max(CI) < choiceDomain[1] ? d3.max(CI) : choiceDomain[0],
               ];
 
               xs = [];
@@ -150,8 +151,8 @@ const BinaryChoice = (props) => {
                 return (
                   r < xScale(choice) + uncertaintyPixelSize &&
                   r > xScale(choice) - uncertaintyPixelSize &&
-                  r <= xScale(1.0) &&
-                  r >= xScale(-1.0)
+                  r <= xScale(choiceDomain[1]) &&
+                  r >= xScale(choiceDomain[0])
                 );
               });
 
