@@ -8,19 +8,28 @@ import "survey-react/survey.css";
 Survey.StylesManager.applyTheme("orange");
 
 const DecisionDialog = (props) => {
-  const [binaryChoice, setBinaryChoice] = useState(null);
+  const [trustworthyChoice, setTrustworthyChoice] = useState(null);
+  const [politicalStanceChoice, setPoliticalStanceChoice] = useState(null);
   const handleClose = () => {
     props.onClose();
   };
 
-  const handleResponse = (response, index) => {
-    console.log(response);
-    setBinaryChoice(response);
+  const handleResponseTrustworthy = (response, index) => {
+    response["index"] = index;
+    setTrustworthyChoice(response);
+  };
+
+  const handleResponseStance = (response, index) => {
+    response["index"] = index;
+    setPoliticalStanceChoice(response);
   };
 
   const onComplete = (survey, options) => {
     //Write survey results into database
-    console.log("Survey results: " + JSON.stringify(survey.data));
+    let results = { ...survey.data };
+    results["trustworthyChoice"] = trustworthyChoice;
+    results["politicalStanceChoice"] = politicalStanceChoice;
+    console.log(results);
     props.onClose();
   };
 
@@ -37,11 +46,12 @@ const DecisionDialog = (props) => {
 
   const model = new Survey.Model(json);
 
-  let survey = binaryChoice ? (
-    <Survey.Survey model={model} onComplete={onComplete} />
-  ) : (
-    ""
-  );
+  let survey =
+    politicalStanceChoice && trustworthyChoice ? (
+      <Survey.Survey model={model} onComplete={onComplete} />
+    ) : (
+      ""
+    );
   //   model.showCompletedPage = false;
   model.completedHtml = "<p>Thanks for completing this task</p>";
   return (
@@ -57,10 +67,19 @@ const DecisionDialog = (props) => {
       </DialogTitle>
       <DialogContent>
         <BinaryChoice
-          responseIndex={"sourceChoice"}
-          handleResponse={handleResponse}
+          responseIndex={"trustworthyChoice"}
+          choiceDomain={[0, 1]}
+          handleResponse={handleResponseTrustworthy}
           question="how suspicious was the source?"
           tickLabels={["suspicious", "", "trustworthy"]}
+          width="80%"
+          height="125px"
+        ></BinaryChoice>
+        <BinaryChoice
+          responseIndex={"politicalStanding"}
+          handleResponse={handleResponseStance}
+          question="What do you think is the political standing of this source?"
+          tickLabels={["left", "center", "right"]}
           width="80%"
           height="125px"
         ></BinaryChoice>

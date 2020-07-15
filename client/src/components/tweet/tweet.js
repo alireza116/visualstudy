@@ -19,17 +19,21 @@ const useStyles = makeStyles({
 
 const Tweet = (props) => {
   //   console.log(props.text);
-  const showImage = props.showImage || true;
+  console.log(props.showImage);
+  const showImage = props.showImage;
   const classes = useStyles();
-  const image = showImage ? (
-    <img src={props.src} style={{ borderRadius: 15 }} />
-  ) : null;
+
   return (
     <Card className={classes.tweetCard}>
       <Typography variant="body1" style={{ marginBottom: "10px" }}>
         {props.text}
       </Typography>
-      <div style={{ textAlign: "center" }}>{image}</div>
+      <p>{props.showImage}</p>
+      <div style={{ textAlign: "center" }}>
+        {props.showImage ? (
+          <img src={props.src} style={{ borderRadius: 15 }} />
+        ) : null}
+      </div>
     </Card>
   );
 };

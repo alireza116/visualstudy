@@ -13,9 +13,13 @@ const StudyPage = (props) => {
   const [answerCount, setAnswerCount] = useState(0);
   const [data, setData] = useState([]);
   const [choiceContent, setChoiceContent] = useState([]);
+
   const [happySort, setHappySort] = useState(true);
+  const [showImage, setShowImage] = useState(true);
+
   const [openDialog, setOpenDialog] = React.useState(false);
   const [responses, setResponses] = useState({});
+
   const divContainer = useRef(null);
 
   const handleResponse = (response, index) => {
@@ -42,6 +46,10 @@ const StudyPage = (props) => {
     setData(d);
     setChoiceContent([]);
     setAnswerCount(0);
+  };
+
+  const handleShowImage = (event) => {
+    setShowImage(event.target.checked);
   };
 
   const handleClickOpen = () => {
@@ -72,28 +80,35 @@ const StudyPage = (props) => {
     }
   }, [answerCount]);
 
-  const addContent = () => {
-    let index = answerCount;
-    let content = [
-      ...choiceContent,
-      <Tweet
-        key={`tweet_${answerCount}`}
-        text={data[answerCount].text}
-        src={`/testImages/${data[answerCount]._id}.png`}
-      ></Tweet>,
-
-      <BinaryChoice
-        choiceDomain={[0.0, 1.0]}
-        key={`choice_${index}`}
-        responseIndex={index}
-        handleResponse={handleResponse}
-        tickLabels={["suspicious", "", "trustworthy"]}
-      ></BinaryChoice>,
-      <Divider key={`divider_${answerCount}`}></Divider>,
-    ];
-    setChoiceContent(content);
+  const handleAddMoreClick = () => {
     setAnswerCount(answerCount + 1);
-    index++;
+  };
+
+  const addContent = () => {
+    console.log(showImage);
+    let content = [];
+    for (let i = 0; i <= answerCount; i++) {
+      content.push(
+        <Tweet
+          key={`tweet_${i}`}
+          text={data[i].text}
+          src={`/testImages/${data[i]._id}.png`}
+          showImage={showImage}
+        ></Tweet>
+      );
+      content.push(
+        <BinaryChoice
+          choiceDomain={[0.0, 1.0]}
+          key={`choice_${i}`}
+          responseIndex={i}
+          handleResponse={handleResponse}
+          tickLabels={["suspicious", "", "trustworthy"]}
+        ></BinaryChoice>
+      );
+      content.push(<Divider key={`divider_${i}`}></Divider>);
+    }
+    // let content = [, ,];
+    setChoiceContent(content);
   };
 
   useEffect(() => {
@@ -113,11 +128,10 @@ const StudyPage = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("first content added");
     if (data.length > 0) {
       addContent();
     }
-  }, [data]);
+  }, [data, answerCount, showImage]);
 
   return (
     <div
@@ -133,19 +147,11 @@ const StudyPage = (props) => {
     >
       <p>Sort based on happiness?</p>
       <Switch onChange={handleSort} checked={happySort}></Switch>
-      {choiceContent}
-      {/* <Tweet></Tweet>
+      <p>show images?</p>
+      <Switch onChange={handleShowImage} checked={showImage}></Switch>
 
-      <BinaryChoice
-        setChoice={props.setChoice}
-        setUncertaintyCI={props.setUncertaintyCI}
-      ></BinaryChoice> */}
-      {/* <p>Choice:</p>
-      <p>{props.choice}</p>
-      <p>Uncertainty CI:</p>
-      <p>
-        `{props.uncertaintyCI[0]}, {props.uncertaintyCI[1]}`
-      </p> */}
+      <div>{choiceContent}</div>
+
       <div
         style={{
           textAlign: "center",
@@ -160,7 +166,7 @@ const StudyPage = (props) => {
             color: "black",
           }}
           variant="contained"
-          onClick={addContent}
+          onClick={handleAddMoreClick}
         >
           See More Tweets
         </Button>

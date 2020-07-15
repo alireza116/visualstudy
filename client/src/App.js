@@ -16,6 +16,9 @@ const App = () => {
   // const [choice, setChoice] = useState(0);
   // const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
 
+  const [happySort, setHappySort] = useState(true);
+  const [showImage, setShowImage] = useState(false);
+
   return (
     <div className="app" style={{ height: "100%", overflow: "auto" }}>
       <Router>
@@ -25,8 +28,13 @@ const App = () => {
             <Route path="/consent" component={Consent}></Route>
             <Route path="/instructions"></Route>
             <Route path="/pre" component={PreSurveyPage}></Route>
-            <Route path="/study" component={StudyPage}>
-              {/* <StudyPage></StudyPage> */}
+            <Route path="/study">
+              <StudyPage
+                happySort={happySort}
+                setHappySort={setHappySort}
+                showImage={showImage}
+                setShowImage={setShowImage}
+              ></StudyPage>
             </Route>
             <Route path="/post" component={PostSurveyPage}></Route>
             <Route path="/debrief"></Route>
