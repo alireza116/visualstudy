@@ -10,8 +10,11 @@ Survey.StylesManager.applyTheme("orange");
 const DecisionDialog = (props) => {
   const [trustworthyChoice, setTrustworthyChoice] = useState(null);
   const [politicalStanceChoice, setPoliticalStanceChoice] = useState(null);
+  let results;
   const handleClose = () => {
-    props.onClose();
+    if (results) {
+      props.onClose();
+    }
   };
 
   const handleResponseTrustworthy = (response, index) => {
@@ -26,11 +29,15 @@ const DecisionDialog = (props) => {
 
   const onComplete = (survey, options) => {
     //Write survey results into database
-    let results = { ...survey.data };
+    results = { ...survey.data };
     results["trustworthyChoice"] = trustworthyChoice;
     results["politicalStanceChoice"] = politicalStanceChoice;
-    console.log(results);
-    props.onClose();
+    if (results["choiceComment"]) {
+      props.setAccountResponse(results);
+      setTrustworthyChoice(null);
+      setPoliticalStanceChoice(null);
+      props.onClose();
+    }
   };
 
   const json = {
@@ -56,7 +63,7 @@ const DecisionDialog = (props) => {
   model.completedHtml = "<p>Thanks for completing this task</p>";
   return (
     <Dialog
-      onClose={handleClose}
+      // onClose={handleClose}
       aria-labelledby="simple-dialog-title"
       open={props.open}
       scroll="paper"

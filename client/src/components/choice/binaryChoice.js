@@ -6,8 +6,7 @@ const BinaryChoice = (props) => {
   const d3Container = useRef(null);
   const width = props.width || "50%";
   const height = props.height || "18%";
-  console.log(width);
-  console.log(height);
+
   useEffect(
     () => {
       if (d3Container.current) {
@@ -37,7 +36,6 @@ const BinaryChoice = (props) => {
         let choiceMade = false;
         let uncertaintyMade = false;
         let nLines = props.nLines || 100;
-        console.log(props.choiceDomain);
         const choiceDomain = props.choiceDomain || [-1.0, 1.0];
         let qText = props.question || "how suspicious is this tweet?";
 
@@ -119,6 +117,8 @@ const BinaryChoice = (props) => {
             uncertaintyMade = false;
             line.attr("stroke", "orange");
             band.attr("stroke-width", 0);
+            if (props.handleResponse)
+              props.handleResponse(null, props.responseIndex);
           });
 
         rect

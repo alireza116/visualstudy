@@ -1,54 +1,72 @@
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 import NavBar from "./components/nav/nav";
 import Container from "@material-ui/core/Container";
 import BottomNav from "./components/bottomNav/bottomNav";
 
-import { makeStyles } from "@material-ui/core/styles";
 import StudyPage from "./pages/study/study";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
+import ConsentPage from "./pages/consent/consent";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 
-const App = () => {
-  // const [choice, setChoice] = useState(0);
-  // const [uncertaintyCI, setUncertaintyCI] = useState([null, null]);
+// const App = () => {
+class App extends React.Component {
+  state = {
+    answerCount: 0,
+    accIndex: null,
+  };
 
-  const [happySort, setHappySort] = useState(true);
-  const [showImage, setShowImage] = useState(false);
+  componentWillMount() {
+    axios.get("/consent");
+  }
 
-  return (
-    <div className="app" style={{ height: "100%", overflow: "auto" }}>
-      <Router>
-        <NavBar height={"7%"} className="navBar"></NavBar>
-        <Container style={{ height: "86%", margin: "0 auto", width: "100%" }}>
-          <Switch>
-            <Route path="/consent" component={Consent}></Route>
-            <Route path="/instructions"></Route>
-            <Route path="/pre" component={PreSurveyPage}></Route>
-            <Route path="/study">
-              <StudyPage
-                happySort={happySort}
-                setHappySort={setHappySort}
-                showImage={showImage}
-                setShowImage={setShowImage}
-              ></StudyPage>
-            </Route>
-            <Route path="/post" component={PostSurveyPage}></Route>
-            <Route path="/debrief"></Route>
-          </Switch>
-        </Container>
-        <BottomNav height="7%"></BottomNav>
-      </Router>
-    </div>
-  );
-};
+  componentDidMount() {
+    this.setState({ accIndex: 0 });
+  }
 
-const Consent = () => {
-  return <p className="test">consent</p>;
-};
+  setAnswerCount = (newValue) => {
+    this.setState({ answerCount: newValue });
+  };
+
+  setAccIndex = (newValue) => {
+    this.setState({ accIndex: newValue });
+  };
+
+  render() {
+    return (
+      <div className="app" style={{ height: "100%", overflow: "auto" }}>
+        <Router>
+          <NavBar height={"7%"} className="navBar"></NavBar>
+          <Container style={{ height: "86%", margin: "0 auto", width: "100%" }}>
+            <Switch>
+              <Route path="/consent" component={ConsentPage}></Route>
+              <Route path="/instructions"></Route>
+              <Route path="/pre" component={PreSurveyPage}></Route>
+              <Route path="/study">
+                <StudyPage
+                  answerCount={this.state.answerCount}
+                  setAnswerCount={this.setAnswerCount}
+                  accIndex={this.state.accIndex}
+                  setAccIndex={this.setAccIndex}
+                ></StudyPage>
+              </Route>
+              <Route path="/post" component={PostSurveyPage}></Route>
+              <Route path="/debrief"></Route>
+            </Switch>
+          </Container>
+          <BottomNav height="7%"></BottomNav>
+        </Router>
+      </div>
+    );
+  }
+}
+
+// const Consent = () => {
+//   return <p className="test">consent</p>;
+// };
 
 // const Pre = () => {
 //   return <p className="test">Pre</p>;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import * as Survey from "survey-react";
@@ -75,17 +75,7 @@ const PostSurveyPage = (props) => {
     console.log("Survey results: " + JSON.stringify(survey.data));
     history.push("/study");
   };
-  //   console.log(props.setChoice);
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await axios("/study/getData");
-      // console.log(result.data);
-      console.log(result.data);
-    }
-
-    fetchData();
-  }, []);
   const model = new Survey.Model(json);
   model.showCompletedPage = false;
   return (

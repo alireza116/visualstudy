@@ -6,7 +6,8 @@ var cookieParser = require("cookie-parser");
 var bodyparser = require("body-parser");
 
 var indexRouter = require("./api/routes/index");
-var studyRouter = require("./api/routes/study");
+var rq1Router = require("./api/routes/rq1");
+// var dataRouter = require("./api/routes/data");
 
 const app = express();
 
@@ -31,7 +32,8 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.use("/study", studyRouter);
+app.use("/rq1", rq1Router);
+// app.use("/api", dataRouter);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files

@@ -2,97 +2,76 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import BinaryChoice from "../../components/choice/binaryChoice";
 import DecisionDialog from "../../components/dialog/decisionDialog";
+import AlertDialog from "../../components/dialog/alertDialog";
 import Tweet from "../../components/tweet/tweet";
-import { Button, Divider, Switch } from "@material-ui/core";
+import LoadingCircle from "../../components/loading/loading";
+import { useHistory } from "react-router-dom";
+import { Button, Divider } from "@material-ui/core";
 import $ from "jquery";
 
 // let index = 0;
 
 const StudyPage = (props) => {
   //   console.log(props.setChoice);
-  const [answerCount, setAnswerCount] = useState(0);
+  const history = useHistory();
+  const [answerCount, setAnswerCount] = [
+    props.answerCount,
+    props.setAnswerCount,
+  ];
+  const [loadingPpacity, setLoadingOpacity] = useState(0);
   const [data, setData] = useState([]);
   const [choiceContent, setChoiceContent] = useState([]);
-
-  const [happySort, setHappySort] = useState(true);
   const [showImage, setShowImage] = useState(true);
-
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [responses, setResponses] = useState({});
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [tweetResponses, setTweetResponses] = useState({});
+  const [accountResponse, setAccountResponse] = useState({});
+  const [accAssignment, setAccAssignment] = useState({});
 
   const divContainer = useRef(null);
 
   const handleResponse = (response, index) => {
-    console.log(index);
-    // console.log(response);
-    response.index = index;
-    // let responsesCopy = { ...props.responses };
-    setResponses((responses) => {
+    if (response) response.index = index;
+    setTweetResponses((responses) => {
       responses[index] = response;
       return responses;
     });
-
-    // });
   };
 
-  const handleSort = (event) => {
-    setHappySort(event.target.checked);
-    let d;
-    if (event.target.checked) {
-      d = [...data].sort((a, b) => +b["dpfc_happy"] - +a["dpfc_happy"]);
-    } else {
-      d = [...data].sort((a, b) => +b["dpfc_angry"] - +a["dpfc_angry"]);
-    }
-    setData(d);
-    setChoiceContent([]);
-    setAnswerCount(0);
-  };
-
-  const handleShowImage = (event) => {
-    setShowImage(event.target.checked);
-  };
-
-  const handleClickOpen = () => {
+  const handleOpenDialog = () => {
     setOpenDialog(true);
   };
 
-  const handleClose = (value) => {
+  const handleCloseDialog = (value) => {
+    props.setAccIndex(props.accIndex + 1);
     setOpenDialog(false);
   };
 
+  const handleCloseAlert = (value) => {
+    setOpenAlert(false);
+  };
+
   const handleDecision = () => {
-    console.log(responses);
-    handleClickOpen();
+    console.log(tweetResponses);
+    handleOpenDialog();
   };
-
-  const scrollToBottom = () => {
-    if (divContainer.current) {
-      $(divContainer.current).animate(
-        { scrollTop: divContainer.current.scrollHeight },
-        500
-      );
-    }
-  };
-
-  useEffect(() => {
-    if (divContainer.current) {
-      scrollToBottom();
-    }
-  }, [answerCount]);
 
   const handleAddMoreClick = () => {
-    setAnswerCount(answerCount + 1);
+    if (tweetResponses[answerCount]) {
+      setAnswerCount(answerCount + 1);
+    } else {
+      setOpenAlert(true);
+    }
   };
 
   const addContent = () => {
-    console.log(showImage);
     let content = [];
     for (let i = 0; i <= answerCount; i++) {
       content.push(
         <Tweet
           key={`tweet_${i}`}
-          text={data[i].text}
-          src={`/testImages/${data[i]._id}.png`}
+          text={data[i].clean_text}
+          src={`/images/${data[i].idx}.png`}
           showImage={showImage}
         ></Tweet>
       );
@@ -107,25 +86,58 @@ const StudyPage = (props) => {
       );
       content.push(<Divider key={`divider_${i}`}></Divider>);
     }
-    // let content = [, ,];
     setChoiceContent(content);
   };
 
+  const scrollToBottom = () => {
+    if (divContainer.current) {
+      $(divContainer.current).animate(
+        { scrollTop: divContainer.current.scrollHeight },
+        500
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (accountResponse) {
+      let userResponse = {
+        tweetResponses: tweetResponses,
+        accountResponse: accountResponse,
+        accAssignment: accAssignment,
+      };
+      console.log(userResponse);
+      // props.setAccIndex(props.accIndex + 1);
+    }
+  }, [accountResponse]);
+
+  useEffect(() => {
+    if (divContainer.current) {
+      scrollToBottom();
+    }
+  }, [answerCount]);
+
   useEffect(() => {
     async function fetchData() {
-      const result = await axios("/study/getData");
-      // console.log(result.data);
-      let d;
-      if (happySort) {
-        d = result.data.sort((a, b) => +b["dpfc_happy"] - +a["dpfc_happy"]);
-      } else {
-        d = result.data.sort((a, b) => +b["dpfc_angry"] - +a["dpfc_angry"]);
-      }
-      setData(d);
+      const result = await axios.post("/rq1/data", {
+        accIndex: props.accIndex,
+      });
+      setChoiceContent([]);
+      setLoadingOpacity(0.8);
+      setTimeout(() => {
+        setLoadingOpacity(0);
+        setTweetResponses([]);
+        setData(result.data.data);
+        setShowImage(result.data.showImage);
+        setAccAssignment(result.data.accAssignment);
+        setAnswerCount(0);
+      }, 1000);
     }
-
-    fetchData();
-  }, []);
+    if (props.accIndex < 8) {
+      fetchData();
+    } else {
+      history.push("/post");
+    }
+  }, [props.accIndex]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -145,11 +157,6 @@ const StudyPage = (props) => {
       }}
       ref={divContainer}
     >
-      <p>Sort based on happiness?</p>
-      <Switch onChange={handleSort} checked={happySort}></Switch>
-      <p>show images?</p>
-      <Switch onChange={handleShowImage} checked={showImage}></Switch>
-
       <div>{choiceContent}</div>
 
       <div
@@ -178,7 +185,17 @@ const StudyPage = (props) => {
           Make a Decision
         </Button>
       </div>
-      <DecisionDialog open={openDialog} onClose={handleClose}></DecisionDialog>
+      <DecisionDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        setAccountResponse={setAccountResponse}
+      ></DecisionDialog>
+      <AlertDialog
+        open={openAlert}
+        onClose={handleCloseAlert}
+        message="Please make a decision about the previous tweet to be able to see more!"
+      ></AlertDialog>
+      <LoadingCircle opacity={loadingPpacity}></LoadingCircle>
     </div>
   );
 };
