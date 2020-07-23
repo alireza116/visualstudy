@@ -65,7 +65,7 @@ const PreSurveyPage = (props) => {
   const onComplete = (survey, options) => {
     //Write survey results into database
     console.log("Survey results: " + JSON.stringify(survey.data));
-    history.push("/study");
+    history.push("/task1");
   };
   //   console.log(props.setChoice);
 

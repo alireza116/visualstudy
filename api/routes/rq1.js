@@ -3,51 +3,29 @@ const router = express.Router();
 const csv = require("csvtojson");
 const randomstring = require("randomstring");
 const mongoose = require("mongoose");
+const responseSchema = require("../models/response");
 
-const url =
-  "mongodb+srv://thesis:mammadNABOODI1989@cluster0.7mtj9.mongodb.net/thesisstudy?retryWrites=true&w=majority";
-
-mongoose.connect(url);
-mongoose.promise = global.Promise;
-
-const Schema = mongoose.Schema;
-
-const responseSchema = new Schema({
-  usertoken: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  accounts: Schema.Types.Mixed,
-  group: String,
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  prequestionnaire: Schema.Types.Mixed,
-  postquestionnaire: Schema.Types.Mixed,
-  rq1: Schema.Types.Mixed,
-  rq2: Schema.Types.Mixed,
-});
+const Response = mongoose.model("response", responseSchema);
 
 let groups = ["block", "mixed"];
 
-let accs = [
-  "veteranstoday",
-  "amlookout",
-  "opednews",
-  "InvestWatchBlog",
-  "MotherJones",
-  "nypost",
-  "CNNPolitics",
-  "ladailynews",
-];
-
 const accGroups = {
-  suspicious_left: ["veteranstoday", "opednews"],
-  suspicious_right: ["amlookout", "InvestWatchBlog"],
-  trustworthy_left: ["MotherJones", "CNNPolitics"],
-  trustworthy_right: ["nypost", "ladailynews"],
+  suspicious_left: [
+    ["veteranstoday", "A"],
+    ["opednews", "C"],
+  ],
+  suspicious_right: [
+    ["amlookout", "B"],
+    ["InvestWatchBlog", "D"],
+  ],
+  trustworthy_left: [
+    ["MotherJones", "E"],
+    ["CNNPolitics", "G"],
+  ],
+  trustworthy_right: [
+    ["nypost", "F"],
+    ["Jerusalem_Post", "H"],
+  ],
 };
 
 const getAccAssignments = (group) => {
@@ -58,13 +36,15 @@ const getAccAssignments = (group) => {
       let angryIndex = getRandomInt(2);
       let happyIndex = angryIndex ^ 1;
       accAssignments.push({
-        account: accounts[angryIndex],
+        account: accounts[angryIndex][0],
+        accAlias: accounts[angryIndex][1],
         block: true,
         emotionSort: "angry",
         showImage: true,
       });
       accAssignments.push({
-        account: accounts[happyIndex],
+        account: accounts[happyIndex][0],
+        accAlias: accounts[happyIndex][1],
         block: true,
         emotionSort: "happy",
         showImage: true,
@@ -76,13 +56,15 @@ const getAccAssignments = (group) => {
       let withImageIndex = getRandomInt(2);
       let noImageIndex = withImageIndex ^ 1;
       accAssignments.push({
-        account: accounts[withImageIndex],
+        account: accounts[withImageIndex][0],
+        accAlias: accounts[withImageIndex][1],
         block: false,
         emotionSort: null,
         showImage: true,
       });
       accAssignments.push({
-        account: accounts[noImageIndex],
+        account: accounts[noImageIndex][0],
+        accAlias: accounts[noImageIndex][1],
         block: false,
         emotionSort: null,
         showImage: false,
@@ -91,8 +73,6 @@ const getAccAssignments = (group) => {
   }
   return shuffle(accAssignments);
 };
-
-const Response = mongoose.model("response", responseSchema);
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
@@ -103,11 +83,11 @@ router.get("/consent", (req, res) => {
     req.session.usertoken = usertoken;
     req.session.accIndex = 0;
     req.session.group = group;
-    console.log(req.session.accounts);
+    // console.log(req.session.accounts);
     let newResponse = new Response({
       usertoken: usertoken,
-      group: group,
-      accounts: accounts,
+      "rq1.group": group,
+      "rq1.accounts": accounts,
     });
 
     newResponse.save(function (err) {

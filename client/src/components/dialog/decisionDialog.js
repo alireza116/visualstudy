@@ -18,12 +18,12 @@ const DecisionDialog = (props) => {
   };
 
   const handleResponseTrustworthy = (response, index) => {
-    response["index"] = index;
+    if (response) response.index = index;
     setTrustworthyChoice(response);
   };
 
   const handleResponseStance = (response, index) => {
-    response["index"] = index;
+    if (response) response.index = index;
     setPoliticalStanceChoice(response);
   };
 

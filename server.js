@@ -4,9 +4,16 @@ const path = require("path");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var bodyparser = require("body-parser");
-
 var indexRouter = require("./api/routes/index");
 var rq1Router = require("./api/routes/rq1");
+var rq2Router = require("./api/routes/rq2");
+const mongoose = require("mongoose");
+
+const url =
+  "mongodb+srv://thesis:mammadNABOODI1989@cluster0.7mtj9.mongodb.net/thesisstudy?retryWrites=true&w=majority";
+
+mongoose.connect(url);
+mongoose.promise = global.Promise;
 // var dataRouter = require("./api/routes/data");
 
 const app = express();
@@ -33,6 +40,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/rq1", rq1Router);
+app.use("/rq2", rq2Router);
 // app.use("/api", dataRouter);
 
 if (process.env.NODE_ENV === "production") {

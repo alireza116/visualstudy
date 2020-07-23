@@ -2,13 +2,18 @@ import React from "react";
 import NavBar from "./components/nav/nav";
 import Container from "@material-ui/core/Container";
 import BottomNav from "./components/bottomNav/bottomNav";
-
-import StudyPage from "./pages/study/study";
+import Task1 from "./pages/study/task1";
+import Task2 from "./pages/study/task2";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
 import axios from "axios";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 import "./App.css";
 
@@ -17,6 +22,7 @@ class App extends React.Component {
   state = {
     answerCount: 0,
     accIndex: null,
+    personIndex: null,
   };
 
   componentWillMount() {
@@ -25,6 +31,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ accIndex: 0 });
+    this.setState({ personIndex: 0 });
   }
 
   setAnswerCount = (newValue) => {
@@ -35,6 +42,10 @@ class App extends React.Component {
     this.setState({ accIndex: newValue });
   };
 
+  setPersonIndex = (newValue) => {
+    this.setState({ personIndex: newValue });
+  };
+
   render() {
     return (
       <div className="app" style={{ height: "100%", overflow: "auto" }}>
@@ -42,16 +53,31 @@ class App extends React.Component {
           <NavBar height={"7%"} className="navBar"></NavBar>
           <Container style={{ height: "86%", margin: "0 auto", width: "100%" }}>
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                  return <Redirect to="/consent" />;
+                }}
+              />
               <Route path="/consent" component={ConsentPage}></Route>
               <Route path="/instructions"></Route>
               <Route path="/pre" component={PreSurveyPage}></Route>
-              <Route path="/study">
-                <StudyPage
+              <Route path="/task1">
+                <Task1
                   answerCount={this.state.answerCount}
                   setAnswerCount={this.setAnswerCount}
                   accIndex={this.state.accIndex}
                   setAccIndex={this.setAccIndex}
-                ></StudyPage>
+                ></Task1>
+              </Route>
+              <Route path="/task2">
+                <Task2
+                  answerCount={this.state.answerCount}
+                  setAnswerCount={this.setAnswerCount}
+                  personIndex={this.state.personIndex}
+                  setPersonIndex={this.setPersonIndex}
+                ></Task2>
               </Route>
               <Route path="/post" component={PostSurveyPage}></Route>
               <Route path="/debrief"></Route>
