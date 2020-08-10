@@ -14,14 +14,18 @@ function parseString(encodedString) {
 }
 const useStyles = makeStyles({
   tweetCard: {
-    width: "60%",
+    width: "40%",
     // height: "400px",
     backgroundColor: "white",
     borderRadius: 0,
     margin: "0 auto",
     marginBottom: "10px",
     marginTop: "25px",
-    padding: "20px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
+    paddingTop: "20px",
+    paddingBottom: "20px",
+    // paddingLeft: "50px",
     // position: "fixed",
     // bottom: 0,
   },
@@ -35,14 +39,15 @@ const Tweet = (props) => {
 
   return (
     <Card className={classes.tweetCard}>
-      <Typography variant="body1" style={{ marginBottom: "10px" }}>
-        {parseString(props.text)}
-      </Typography>
-      <p>{props.showImage}</p>
-      <div style={{ textAlign: "center" }}>
-        {props.showImage ? (
-          <img src={props.src} style={{ borderRadius: 15 }} />
-        ) : null}
+      <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", float: "left" }}>
+          <Typography variant="body1" style={{ marginBottom: "10px" }}>
+            {parseString(props.text)}
+          </Typography>
+          {props.showImage ? (
+            <img src={props.src} style={{ borderRadius: 15, width: "80%" }} />
+          ) : null}
+        </div>
       </div>
     </Card>
   );

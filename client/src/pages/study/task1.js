@@ -24,10 +24,12 @@ const Task1Page = (props) => {
   const [choiceContent, setChoiceContent] = useState([]);
   const [showImage, setShowImage] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlertMoreTweet, setOpenAlertMoreTweet] = useState(false);
+  const [openAlertAnswerCount, setOpenAlertAnswerCount] = useState(false);
   const [tweetResponses, setTweetResponses] = useState({});
   const [accountResponse, setAccountResponse] = useState({});
   const [accAssignment, setAccAssignment] = useState({});
+  const minTweets = 5;
 
   const divContainer = useRef(null);
 
@@ -48,20 +50,28 @@ const Task1Page = (props) => {
     setOpenDialog(false);
   };
 
-  const handleCloseAlert = (value) => {
-    setOpenAlert(false);
+  const handleCloseAlertMoreTweet = (value) => {
+    setOpenAlertMoreTweet(false);
+  };
+
+  const handleCloseAlertAnswerCount = (value) => {
+    setOpenAlertAnswerCount(false);
   };
 
   const handleDecision = () => {
     console.log(tweetResponses);
-    handleOpenDialog();
+    if (answerCount >= minTweets - 1) {
+      handleOpenDialog();
+    } else {
+      setOpenAlertAnswerCount(true);
+    }
   };
 
   const handleAddMoreClick = () => {
     if (tweetResponses[answerCount]) {
       setAnswerCount(answerCount + 1);
     } else {
-      setOpenAlert(true);
+      setOpenAlertMoreTweet(true);
     }
   };
 
@@ -82,7 +92,8 @@ const Task1Page = (props) => {
           key={`choice_${i}`}
           responseIndex={i}
           handleResponse={handleResponse}
-          tickLabels={["suspicious", "", "trustworthy"]}
+          question="How Unbiased/Biased is this tweet?"
+          tickLabels={["Unbiased", "", "Biased"]}
         ></BinaryChoice>
       );
       content.push(<Divider key={`divider_${i}`}></Divider>);
@@ -186,16 +197,18 @@ const Task1Page = (props) => {
         <Button
           style={{
             marginRight: "10px",
-            backgroundColor: "gray",
-            color: "black",
+            backgroundColor: "#1DA1F2",
+            // color: "black",
           }}
+          color="primary"
           variant="contained"
           onClick={handleAddMoreClick}
         >
           See More Tweets
         </Button>
         <Button
-          style={{ backgroundColor: "gray", color: "black" }}
+          style={{ backgroundColor: "#1DA1F2" }}
+          color="primary"
           variant="contained"
           onClick={handleDecision}
         >
@@ -208,9 +221,14 @@ const Task1Page = (props) => {
         setAccountResponse={setAccountResponse}
       ></DecisionDialog>
       <AlertDialog
-        open={openAlert}
-        onClose={handleCloseAlert}
+        open={openAlertMoreTweet}
+        onClose={handleCloseAlertMoreTweet}
         message="Please make a decision about the previous tweet to be able to see more!"
+      ></AlertDialog>
+      <AlertDialog
+        open={openAlertAnswerCount}
+        onClose={handleCloseAlertAnswerCount}
+        message={`Please view at least ${minTweets} tweets to make a a decision about this account!`}
       ></AlertDialog>
       <LoadingCircle opacity={loadingPpacity}></LoadingCircle>
     </div>

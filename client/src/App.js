@@ -25,9 +25,9 @@ class App extends React.Component {
     personIndex: null,
   };
 
-  componentWillMount() {
-    axios.get("/consent");
-  }
+  // componentWillMount() {
+  //   // axios.get("/consent");
+  // }
 
   componentDidMount() {
     this.setState({ accIndex: 0 });

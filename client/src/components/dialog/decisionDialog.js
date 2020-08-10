@@ -30,22 +30,28 @@ const DecisionDialog = (props) => {
   const onComplete = (survey, options) => {
     //Write survey results into database
     results = { ...survey.data };
-    results["trustworthyChoice"] = trustworthyChoice;
-    results["politicalStanceChoice"] = politicalStanceChoice;
-    if (results["choiceComment"]) {
-      props.setAccountResponse(results);
-      setTrustworthyChoice(null);
-      setPoliticalStanceChoice(null);
-      props.onClose();
-    }
+    results["credibilityChoice"] = trustworthyChoice;
+    results["politicalOrientationChoice"] = politicalStanceChoice;
+    props.setAccountResponse(results);
+    setTrustworthyChoice(null);
+    setPoliticalStanceChoice(null);
+    props.onClose();
   };
 
   const json = {
     elements: [
       {
         type: "comment",
-        name: "choiceComment",
-        title: "How did you arrive to this decision?",
+        name: "textComment",
+        title:
+          "Please describe how/if the text of the tweets that influenced your decisions about this account?",
+        isRequired: true,
+      },
+      {
+        type: "comment",
+        name: "imageComment",
+        title:
+          "Please describe how/if the image of the tweets that influenced your decisions about this account?",
         isRequired: true,
       },
     ],
@@ -77,17 +83,17 @@ const DecisionDialog = (props) => {
           responseIndex={"trustworthyChoice"}
           choiceDomain={[0, 1]}
           handleResponse={handleResponseTrustworthy}
-          question="how suspicious was the source?"
-          tickLabels={["suspicious", "", "trustworthy"]}
-          width="80%"
+          question="Can you evaluate the credibility of this source?"
+          tickLabels={["Uncredible", "", "Credible"]}
+          width="90%"
           height="125px"
         ></BinaryChoice>
         <BinaryChoice
           responseIndex={"politicalStanding"}
           handleResponse={handleResponseStance}
-          question="What do you think is the political standing of this source?"
-          tickLabels={["left", "center", "right"]}
-          width="80%"
+          question="What is the political orientation of this source?"
+          tickLabels={["Left", "Center", "Right"]}
+          width="90%"
           height="125px"
         ></BinaryChoice>
         {survey}

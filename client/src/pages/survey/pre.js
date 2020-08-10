@@ -19,7 +19,7 @@ const PreSurveyPage = (props) => {
         choices: ["Female", "Male", "Other", "Prefer not to say"],
       },
       {
-        type: "checkbox",
+        type: "radiogroup",
         name: "race",
         title: "What is your race/ethnicity?",
         isRequired: true,
@@ -65,7 +65,9 @@ const PreSurveyPage = (props) => {
   const onComplete = (survey, options) => {
     //Write survey results into database
     console.log("Survey results: " + JSON.stringify(survey.data));
-    history.push("/task1");
+    axios.post("/preq", survey.data).then((response) => {
+      history.push("/task1");
+    });
   };
   //   console.log(props.setChoice);
 

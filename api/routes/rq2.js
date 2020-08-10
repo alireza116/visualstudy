@@ -9,18 +9,28 @@ const Response = mongoose.model("response", responseSchema);
 
 let groups = ["image", "noImage"];
 
-const clusterNames = [
-  [129, "Donald Trump", "I"],
-  [111, "Vladimir Putin", "J"],
-  [122, "Theresa May", "K"],
-  [100, "Hillary Clinton", "L"],
-  [54, "Emanuel Macron", "M"],
-  [126, "Angela Merkel", "N"],
-  [117, "Barack Obama", "O"],
-  [132, "Kim Jong-un", "P"],
-];
+// const clusterNames = [
+//   [129, "Donald Trump", "I"],
+//   [111, "Vladimir Putin", "J"],
+//   [122, "Theresa May", "K"],
+//   [100, "Hillary Clinton", "L"],
+//   [54, "Emanuel Macron", "M"],
+//   [126, "Angela Merkel", "N"],
+//   [117, "Barack Obama", "O"],
+//   [132, "Kim Jong-un", "P"],
+// ];
 
 const getPersonAssignment = (group) => {
+  const clusterNames = [
+    [129, "Donald Trump", "I"],
+    [111, "Vladimir Putin", "J"],
+    [122, "Theresa May", "K"],
+    [100, "Hillary Clinton", "L"],
+    [54, "Emanuel Macron", "M"],
+    [126, "Angela Merkel", "N"],
+    [117, "Barack Obama", "O"],
+    [132, "Kim Jong-un", "P"],
+  ];
   let clusterNamesCopy = shuffle([...clusterNames]);
   let personAssignments;
   if (group === "image") {
@@ -57,10 +67,8 @@ const getPersonAssignment = (group) => {
 router.get("/init", (req, res) => {
   let usertoken = req.session.usertoken;
   let group = choose(groups);
-  console.log(group);
   let people = getPersonAssignment(group);
   req.session.people = people;
-  console.log(req.session.people);
   req.session.personIndex = 0;
   req.session.group = group;
   Response.findOneAndUpdate(

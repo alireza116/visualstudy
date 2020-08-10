@@ -3,14 +3,13 @@ import axios from "axios";
 import BinaryChoice from "../../components/choice/binaryChoice";
 import DecisionDialog from "../../components/dialog/decisionDialog";
 import AlertDialog from "../../components/dialog/alertDialog";
+import PersonDialog from "../../components/dialog/personDialog";
 import Tweet from "../../components/tweet/tweet";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";
 import { Button, Divider } from "@material-ui/core";
 import $ from "jquery";
-
-// let index = 0;
 
 const Task2Page = (props) => {
   //   console.log(props.setChoice);
@@ -25,9 +24,11 @@ const Task2Page = (props) => {
   const [showImage, setShowImage] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openPersonDialog, setOpenPersonDialog] = useState(false);
   const [tweetResponses, setTweetResponses] = useState({});
   const [accountResponse, setAccountResponse] = useState({});
-  const [accAssignment, setAccAssignment] = useState({});
+  const [personResponse, setPersonResponse] = useState({});
+  const [personAssignment, setpersonAssignment] = useState({});
 
   const divContainer = useRef(null);
 
@@ -46,6 +47,14 @@ const Task2Page = (props) => {
   const handleCloseDialog = (value) => {
     props.setPersonIndex(props.personIndex + 1);
     setOpenDialog(false);
+  };
+
+  const handleOpenPersonDialog = (value) => {
+    setOpenPersonDialog(true);
+  };
+
+  const handleClosePersonDialg = (value) => {
+    setOpenPersonDialog(false);
   };
 
   const handleCloseAlert = (value) => {
@@ -82,7 +91,8 @@ const Task2Page = (props) => {
           key={`choice_${i}`}
           responseIndex={i}
           handleResponse={handleResponse}
-          tickLabels={["suspicious", "", "trustworthy"]}
+          question="How Biased/Not Biased is this tweet?"
+          tickLabels={["Biased", "", "Not Biased"]}
         ></BinaryChoice>
       );
       content.push(<Divider key={`divider_${i}`}></Divider>);
@@ -102,9 +112,10 @@ const Task2Page = (props) => {
   useEffect(() => {
     if (accountResponse) {
       let userResponse = {
+        personResponse: personResponse,
         tweetResponses: tweetResponses,
         accountResponse: accountResponse,
-        personAssignment: accAssignment,
+        personAssignment: personAssignment,
       };
       console.log(userResponse);
       // props.setAccIndex(props.accIndex + 1);
@@ -127,10 +138,13 @@ const Task2Page = (props) => {
       setTimeout(() => {
         setLoadingOpacity(0);
         setTweetResponses([]);
+        console.log(result.data.data);
         setData(result.data.data);
         setShowImage(result.data.showImage);
-        setAccAssignment(result.data.personAssignment);
+        console.log(result.data.personAssignment);
+        setpersonAssignment(result.data.personAssignment);
         setAnswerCount(0);
+        handleOpenPersonDialog();
       }, 1000);
     }
     if (props.personIndex < 8) {
@@ -162,7 +176,7 @@ const Task2Page = (props) => {
       }}
       ref={divContainer}
     >
-      <Instructions accAlias={accAssignment.accAlias}></Instructions>
+      <Instructions accAlias={personAssignment.accAlias}></Instructions>
       <div>{choiceContent}</div>
 
       <div
@@ -175,16 +189,18 @@ const Task2Page = (props) => {
         <Button
           style={{
             marginRight: "10px",
-            backgroundColor: "gray",
-            color: "black",
+            backgroundColor: "#1DA1F2",
+            // color: "black",
           }}
+          color="primary"
           variant="contained"
           onClick={handleAddMoreClick}
         >
           See More Tweets
         </Button>
         <Button
-          style={{ backgroundColor: "gray", color: "black" }}
+          style={{ backgroundColor: "#1DA1F2" }}
+          color="primary"
           variant="contained"
           onClick={handleDecision}
         >
@@ -196,6 +212,12 @@ const Task2Page = (props) => {
         onClose={handleCloseDialog}
         setAccountResponse={setAccountResponse}
       ></DecisionDialog>
+      <PersonDialog
+        open={openPersonDialog}
+        onClose={handleClosePersonDialg}
+        setPersonResponse={setPersonResponse}
+        person={personAssignment.person}
+      ></PersonDialog>
       <AlertDialog
         open={openAlert}
         onClose={handleCloseAlert}

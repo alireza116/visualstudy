@@ -73,7 +73,10 @@ const PostSurveyPage = (props) => {
   const onComplete = (survey, options) => {
     //Write survey results into database
     console.log("Survey results: " + JSON.stringify(survey.data));
-    history.push("/study");
+    axios.post("/postq", survey.data).then((response) => {
+      console.log(response);
+      history.push("/study");
+    });
   };
 
   const model = new Survey.Model(json);

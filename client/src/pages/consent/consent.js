@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const Consent = (props) => {
   const history = useHistory();
   const handleConsent = () => {
-    axios.get("/rq1/consent").then((result) => {
+    axios.get("/consent").then((result) => {
       //   console.log(result.data);
       history.push("/pre");
     });
