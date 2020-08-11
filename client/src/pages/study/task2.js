@@ -91,7 +91,7 @@ const Task2Page = (props) => {
           key={`choice_${i}`}
           responseIndex={i}
           handleResponse={handleResponse}
-          question="How Biased/Not Biased is this tweet?"
+          question="How Biased / Not Biased is this tweet?"
           tickLabels={["Biased", "", "Not Biased"]}
         ></BinaryChoice>
       );

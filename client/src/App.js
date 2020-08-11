@@ -7,6 +7,7 @@ import Task2 from "./pages/study/task2";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
+import InstructionsMainPage from "./pages/instructions/instructionMain";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -61,7 +62,10 @@ class App extends React.Component {
                 }}
               />
               <Route path="/consent" component={ConsentPage}></Route>
-              <Route path="/instructions"></Route>
+              <Route
+                path="/instructions"
+                component={InstructionsMainPage}
+              ></Route>
               <Route path="/pre" component={PreSurveyPage}></Route>
               <Route path="/task1">
                 <Task1
