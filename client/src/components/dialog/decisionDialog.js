@@ -10,6 +10,7 @@ Survey.StylesManager.applyTheme("orange");
 const DecisionDialog = (props) => {
   const [trustworthyChoice, setTrustworthyChoice] = useState(null);
   const [politicalStanceChoice, setPoliticalStanceChoice] = useState(null);
+
   let results;
   const handleClose = () => {
     if (results) {
@@ -83,8 +84,8 @@ const DecisionDialog = (props) => {
           responseIndex={"trustworthyChoice"}
           choiceDomain={[0, 1]}
           handleResponse={handleResponseTrustworthy}
-          question="Can you evaluate the credibility of this source?"
-          tickLabels={["Uncredible", "", "Credible"]}
+          question="Please evaluate the credibility of this source."
+          tickLabels={["Not Credible", "", "Credible"]}
           width="90%"
           height="125px"
         ></BinaryChoice>

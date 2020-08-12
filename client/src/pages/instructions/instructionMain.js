@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: "red",
   },
-  container: {
+  instructContainer: {
     height: "100%",
     margin: "0 auto",
     overflow: "auto",
@@ -37,12 +37,12 @@ const InstructionsMain = (props) => {
   };
 
   return (
-    <Container maxWidth="md" className={classes.container}>
+    <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Study Instructions</h3>
       <h3>Please read thesee instructions carefully</h3>
       <p>
         In this study, our main goal is understand how you will rate{" "}
-        <span className={classes.emph}>Bias</span>,
+        <span className={classes.emph}>Bias in tweets</span>,
         <span className={classes.emph}>Credibility of Source</span>, and{" "}
         <span className={classes.emph}>Political Orientation of Source</span> of
         tweets.
@@ -133,7 +133,7 @@ const InstructionsMain = (props) => {
         {" "}
         Let's imagine a scenario in which you are submiting your belief about
         how credible a source of news on Twitter is: <br />
-        Let's assume you believe that{" "}
+        Assume you believe that{" "}
         <span className={classes.emph}> the source is very Credible</span>, and
         you are
         <span className={classes.emph}> very certain</span> of your decision.
@@ -167,6 +167,7 @@ const InstructionsMain = (props) => {
         and you are
         <span className={classes.emph}> very uncertain</span> of your judgment.{" "}
         <br />
+        <br />
         <span className={classes.highlight}>
           {" "}
           use the chart below to show your decision
@@ -179,6 +180,48 @@ const InstructionsMain = (props) => {
         question="How Not Credible / Credible is this source?"
         tickLabels={["Not Credible", "", "Credible"]}
       ></BinaryChoice>
+      <hr />
+      <h4>What will you go through in this study</h4>
+      <ul>
+        <li>You will evaluate 16 accounts</li>
+        <li>
+          Tweets from these accounts, include text, and might include images
+        </li>
+        <li>
+          You will evaluate Credibility and Political Orientation of all 16
+          accounts using the method we just discussed.
+        </li>
+        <li>
+          For each account, we ask that you write in two text boxes, how the the
+          text and images influenced your judgment. If the account had no
+          images, you can type N/A in the respective box.
+        </li>
+      </ul>
+      <h4>For each account</h4>
+      <ul>
+        <li>
+          {" "}
+          You will go through tweets one by one and evalute how Biased each
+          tweet is.
+        </li>
+        <li>You can click on "View More Tweets" to see the next one.</li>
+        <li>
+          Whenever you feel like you have made your judgment about that account,
+          click on "Make a decision"
+        </li>
+        <li>
+          A popup will appear and you will answer the questions about each
+          account
+        </li>
+      </ul>
+      <h4>There are Two tasks</h4>
+      <ul>
+        <li>Task 1 includes 8 accounts. Tweets are about different topics.</li>
+        <li>
+          Task 2 include 8 other accounts. Tweets for each account are filtered
+          to focus on tweets about specific identities.
+        </li>
+      </ul>
       <div
         style={{
           textAlign: "center",

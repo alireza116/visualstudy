@@ -49,10 +49,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="app" style={{ height: "100%", overflow: "auto" }}>
+      <div
+        className="app"
+        style={{ height: "100%", overflow: "auto", lineHeight: "150%" }}
+      >
         <Router>
           <NavBar height={"7%"} className="navBar"></NavBar>
-          <Container style={{ height: "86%", margin: "0 auto", width: "100%" }}>
+          <Container
+            style={{ height: "86%", margin: "0 auto", width: "100%" }}
+            id="root-container"
+          >
             <Switch>
               <Route
                 exact
