@@ -29,7 +29,7 @@ export default function NavBar(props) {
       <AppBar position="sticky" className={classes.navBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Misinformation Study
+            Social Media News Judgment Study
           </Typography>
         </Toolbar>
       </AppBar>
