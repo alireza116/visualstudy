@@ -15,7 +15,6 @@ function parseString(encodedString) {
 const useStyles = makeStyles({
   tweetCard: {
     width: "40%",
-    // height: "400px",
     backgroundColor: "white",
     borderRadius: 0,
     margin: "0 auto",
@@ -25,16 +24,10 @@ const useStyles = makeStyles({
     paddingRight: "50px",
     paddingTop: "20px",
     paddingBottom: "20px",
-    // paddingLeft: "50px",
-    // position: "fixed",
-    // bottom: 0,
   },
 });
 
 const Tweet = (props) => {
-  //   console.log(props.text);
-  console.log(props.showImage);
-  const showImage = props.showImage;
   const classes = useStyles();
 
   return (

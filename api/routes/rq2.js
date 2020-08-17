@@ -20,7 +20,8 @@ let groups = ["image", "noImage"];
 //   [132, "Kim Jong-un", "P"],
 // ];
 
-const getPersonAssignment = (group) => {
+const getPersonAssignment = () => {
+  const groups = ["image", "noImage"];
   const clusterNames = [
     [129, "Donald Trump", "I"],
     [111, "Vladimir Putin", "J"],
@@ -31,6 +32,7 @@ const getPersonAssignment = (group) => {
     [117, "Barack Obama", "O"],
     [132, "Kim Jong-un", "P"],
   ];
+  let group = choose(groups);
   let clusterNamesCopy = shuffle([...clusterNames]);
   let personAssignments;
   if (group === "image") {
@@ -61,13 +63,12 @@ const getPersonAssignment = (group) => {
       };
     });
   }
-  return shuffle(personAssignments);
+  return [shuffle(personAssignments),group];
 };
 
 router.get("/init", (req, res) => {
   let usertoken = req.session.usertoken;
-  let group = choose(groups);
-  let people = getPersonAssignment(group);
+  let [people,group] = getPersonAssignment();
   req.session.people = people;
   req.session.personIndex = 0;
   req.session.group = group;

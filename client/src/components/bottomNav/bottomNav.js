@@ -6,14 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    height: "7%",
-    backgroundColor: "orange",
-    pointerEvents: "None",
-  },
-  selected: {
     color: "white",
+    "&$selected": {
+      color: "blue",
+    },
   },
+  selected: {},
 }));
 
 // const useStyles = makeStyles({
@@ -46,42 +44,36 @@ const BottomNav = (props) => {
       // }}
       showLabels
       className={classes.root}
-      style={{ height: props.height }}
+      style={{
+        height: props.height,
+        width: "100%",
+        height: "7%",
+        backgroundColor: "orange",
+        pointerEvents: "None",
+      }}
     >
       <BottomNavigationAction
         label="Consent"
         value="/consent"
-        className={classes.selected}
+        classes={classes}
       />
       <BottomNavigationAction
         label="Pre-questionaire"
         value="/pre"
-        className={classes.selected}
+        classes={classes}
       />
       <BottomNavigationAction
         label="Instructions"
         value="/instructions"
-        className={classes.selected}
+        classes={classes}
       />
-      <BottomNavigationAction
-        label="Task 1"
-        value="/task1"
-        className={classes.selected}
-      />
-      <BottomNavigationAction
-        label="Task 2"
-        value="/task2"
-        className={classes.selected}
-      />
-      <BottomNavigationAction
-        label="Post"
-        value="/post"
-        className={classes.selected}
-      />
+      <BottomNavigationAction label="Task 1" value="/task1" classes={classes} />
+      <BottomNavigationAction label="Task 2" value="/task2" classes={classes} />
+      <BottomNavigationAction label="Post" value="/post" classes={classes} />
       <BottomNavigationAction
         label="Debrief"
         value="/debrief"
-        className={classes.selected}
+        classes={classes}
       />
     </BottomNavigation>
   );

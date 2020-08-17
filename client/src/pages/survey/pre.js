@@ -65,7 +65,7 @@ const PreSurveyPage = (props) => {
   const onComplete = (survey, options) => {
     //Write survey results into database
     console.log("Survey results: " + JSON.stringify(survey.data));
-    axios.post("/preq", survey.data).then((response) => {
+    axios.post("/api/preq", survey.data).then((response) => {
       history.push("/instructions");
     });
   };

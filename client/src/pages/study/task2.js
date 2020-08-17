@@ -91,8 +91,8 @@ const Task2Page = (props) => {
           key={`choice_${i}`}
           responseIndex={i}
           handleResponse={handleResponse}
-          question="How Biased / Not Biased is this tweet?"
-          tickLabels={["Biased", "", "Not Biased"]}
+          question="How Not Biased / Biased is this tweet?"
+          tickLabels={["Not Biased", "", "Biased"]}
         ></BinaryChoice>
       );
       content.push(<Divider key={`divider_${i}`}></Divider>);

@@ -15,7 +15,7 @@ const Instructions = (props) => {
         Twitter Account{" "}
         <span style={{ fontWeight: "bold" }}>{props.accAlias}</span>
       </Typography>
-      <p variant="body">{props.children}</p>
+      <div>{props.children}</div>
       <Divider></Divider>
     </div>
   );

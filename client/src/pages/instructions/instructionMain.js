@@ -39,25 +39,25 @@ const InstructionsMain = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Study Instructions</h3>
-      <h3>Please read thesee instructions carefully</h3>
+      <h3>Please read these instructions carefully</h3>
       <p>
-        In this study, our main goal is understand how you will rate{" "}
-        <span className={classes.emph}>Bias in tweets</span>,
-        <span className={classes.emph}>Credibility of Source</span>, and{" "}
-        <span className={classes.emph}>Political Orientation of Source</span> of
+        In this study, our main goal is to understand how individuals form
+        beliefs on
+        <span className={classes.emph}>bias </span>,
+        <span className={classes.emph}>credibility</span>, and{" "}
+        <span className={classes.emph}>political orientation of source</span> of
         tweets.
       </p>
       <p>
         To do this we have collected tweets from multiple sources of news on
-        Twitter. The tweets are from about two years ago and include many
+        Twitter. These tweets are about four years old and include many
         different domestic and international topics. We will not show you the
-        sources name so that your opinions are not influenced by your potential
-        knowledge about that source. We are asking you to based your judgments
-        based on the tweets you will see.
+        source name (i.e., Twitter account that posted the tweet) so that your
+        opinions are not influenced by your prior beliefs about that source. We
+        ask you to base your judgments based on only the information provided to
+        you in this study.
       </p>
-      <p className={classes.emph}>
-        First, we would like to clarify some definitions
-      </p>
+      <p className={classes.emph}>First, let’s review important definitions</p>
       <ul>
         <li>
           <span className={classes.emph}>Tweet</span> A piece of news on Twitter
@@ -66,22 +66,20 @@ const InstructionsMain = (props) => {
         </li>
         <li>
           <span className={classes.emph}>Source</span> A Twitter account that
-          produces news. In this study, you will assess the crediblity of
-          multiple sources of news on Twitter!{" "}
+          produces news. In this study, you will assess the credibility of
+          multiple sources of news on Twitter.
         </li>
         <li>
           <span className={classes.emph}>Biased / Not Biased:</span> a statement
           is biased when it reflects a partiality, preference, or prejudice for
-          or against a person, object, or idea . So wheen you feel like a tweet
-          is lacks any partiality, you would rate it is not biased, and when you
-          feel it is taking sides, or is very opinionated, you would rate it as
-          biased.
+          or against a person, object, or idea. If you feel like a tweet is
+          impartial, you would rate it as not biased.
         </li>
         <li>
-          <span className={classes.emph}>Not Credible / Credible:</span> When
-          you feel likee a source is compleeteely credible, it means that you
-          are very likely to trust the content and news coming from that source.
-          On the otherhand, you would not trust a source that you feel is not
+          <span className={classes.emph}>Not Credible / Credible:</span> : When
+          you feel like a source is completely credible, it means that you are
+          very likely to trust the content and news coming from that source. On
+          the other hand, you would not trust a source that you feel is not
           credible.
         </li>
         <li>
@@ -89,28 +87,24 @@ const InstructionsMain = (props) => {
             Left / Right Political Orientation:
           </span>{" "}
           We are asking you to rate sources of news, based on your own knowledge
-          of left / right political spectrum.
+          of left (liberal) / right (conservative) political spectrum.
         </li>
       </ul>
       <p>
         {" "}
-        Since, these subjects cannot always be rated with very high certainty,
-        so we are using a method that allows you to state your beliefs about
-        these concepts, while also stating how uncertain you are about your
-        choice.
+        Since these subjects cannot always be rated with very high certainty, we
+        use a method to measure your uncertainty around your beliefs.
       </p>
       <p>
-        This method allows you to <span className={classes.emph}>first</span>{" "}
-        select what you believe to be the most likely rating, and{" "}
-        <span className={classes.emph}>next</span> selecting a range of
-        plausible alternatives.
+        This method allows you to first select what you believe to be the most
+        likely rating, and next selecting a range of plausible alternatives
+        (i.e., range of uncertainty around your decision).
       </p>
       <hr />
-      <p>So let's look at example:</p>
+      <p>Let's look at example:</p>
       <p>
-        In the animation below, a user is selecting that a tweet is very biased,
-        and they are more or less sure that the bias rating lies to the very
-        right of the specturm
+        In the animation below, the user determined a tweet is very biased but
+        with a range of uncertainty around their decision.
       </p>
       <img
         src={process.env.PUBLIC_URL + "/uncertainty1.gif"}
@@ -118,9 +112,9 @@ const InstructionsMain = (props) => {
         className={classes.image}
       />
       <p>
-        In the next animation, we can see a user that believes a tweet is very
-        unbiased, but they are not very sure, and they think that it's possible
-        that the tweet is moderately biased
+        In the next animation, we can see a user that believes a tweet is
+        somewhat unbiased. However, they are not very sure and they think that
+        it's possible that the tweet is moderately biased.
       </p>
       <img
         src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
@@ -128,7 +122,7 @@ const InstructionsMain = (props) => {
         className={classes.image}
       />
       <hr />
-      <h4>Now let's practice with this technique:</h4>
+      <p className={classes.emph}>Now let's practice with this technique:</p>
       <p>
         {" "}
         Let's imagine a scenario in which you are submiting your belief about
@@ -141,7 +135,7 @@ const InstructionsMain = (props) => {
       <p>
         First use your mouse to hover on the chart. <br />
         Click to select the line that best represents your belief. <br />
-        Then use the mouse to select the range of plusible alternatives that
+        Then use the mouse to select the range of plausible alternatives that
         represents how uncertain you are about your belief.
       </p>
       <span className={classes.highlight}>
@@ -185,7 +179,7 @@ const InstructionsMain = (props) => {
       <ul>
         <li>You will evaluate 16 accounts</li>
         <li>
-          Tweets from these accounts, include text, and might include images
+          Tweets from these accounts, include text, and could include images
         </li>
         <li>
           You will evaluate Credibility and Political Orientation of all 16
@@ -219,7 +213,8 @@ const InstructionsMain = (props) => {
         <li>Task 1 includes 8 accounts. Tweets are about different topics.</li>
         <li>
           Task 2 include 8 other accounts. Tweets for each account are filtered
-          to focus on tweets about specific identities.
+          to focus on tweets about specific identities as Donald Trump, Barack
+          Obama, or Emanuel Macron.
         </li>
       </ul>
       <div
