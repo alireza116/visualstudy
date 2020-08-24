@@ -24,12 +24,13 @@ const Task2Page = (props) => {
   const [showImage, setShowImage] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openAlertAnswerCount, setOpenAlertAnswerCount] = useState(false);
   const [openPersonDialog, setOpenPersonDialog] = useState(false);
   const [tweetResponses, setTweetResponses] = useState({});
   const [accountResponse, setAccountResponse] = useState({});
   const [personResponse, setPersonResponse] = useState({});
   const [personAssignment, setpersonAssignment] = useState({});
-
+  const minTweets = 5;
   const divContainer = useRef(null);
 
   const handleResponse = (response, index) => {
@@ -61,9 +62,18 @@ const Task2Page = (props) => {
     setOpenAlert(false);
   };
 
+  const handleCloseAlertAnswerCount = (value) => {
+    setOpenAlertAnswerCount(false);
+  };
+
   const handleDecision = () => {
     console.log(tweetResponses);
-    handleOpenDialog();
+    if (answerCount >= minTweets - 1) {
+      handleOpenDialog();
+    } else {
+      setOpenAlertAnswerCount(true);
+    }
+    // handleOpenDialog();
   };
 
   const handleAddMoreClick = () => {
@@ -81,7 +91,7 @@ const Task2Page = (props) => {
         <Tweet
           key={`tweet_${i}`}
           text={data[i].clean_text}
-          src={`/images/${data[i].idx}.png`}
+          src={`/rq2/${data[i].idx}.png`}
           showImage={showImage}
         ></Tweet>
       );
@@ -117,7 +127,14 @@ const Task2Page = (props) => {
         accountResponse: accountResponse,
         personAssignment: personAssignment,
       };
+
       console.log(userResponse);
+
+      if (tweetResponses.length > 0) {
+        axios.post("/rq2/response", userResponse).then((res) => {
+          console.log(res);
+        });
+      }
       // props.setAccIndex(props.accIndex + 1);
     }
   }, [accountResponse]);
@@ -130,6 +147,7 @@ const Task2Page = (props) => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log(props.personIndex);
       const result = await axios.post("/rq2/data", {
         personIndex: props.personIndex,
       });
@@ -147,7 +165,7 @@ const Task2Page = (props) => {
         handleOpenPersonDialog();
       }, 1000);
     }
-    if (props.personIndex < 8) {
+    if ((props.personIndex >= 0) & (props.personIndex < 8)) {
       fetchData();
     } else {
       history.push("/post");
@@ -222,6 +240,11 @@ const Task2Page = (props) => {
         open={openAlert}
         onClose={handleCloseAlert}
         message="Please make a decision about the previous tweet to be able to see more!"
+      ></AlertDialog>
+      <AlertDialog
+        open={openAlertAnswerCount}
+        onClose={handleCloseAlertAnswerCount}
+        message={`Please view at least ${minTweets} tweets to make a a decision about this account!`}
       ></AlertDialog>
       <LoadingCircle opacity={loadingOpacity}></LoadingCircle>
     </div>

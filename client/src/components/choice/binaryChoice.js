@@ -184,7 +184,7 @@ const BinaryChoice = (props) => {
               if (props.handleResponse)
                 props.handleResponse(
                   {
-                    CI: CI,
+                    CI: [d3.min(CI), d3.max(CI)],
                     choice: choice,
                   },
                   props.responseIndex

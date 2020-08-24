@@ -82,7 +82,7 @@ const Task1Page = (props) => {
         <Tweet
           key={`tweet_${i}`}
           text={data[i].clean_text}
-          src={`/images/${data[i].idx}.png`}
+          src={`/rq1/${data[i].idx}.png`}
           showImage={showImage}
         ></Tweet>
       );
@@ -117,7 +117,12 @@ const Task1Page = (props) => {
         accountResponse: accountResponse,
         accAssignment: accAssignment,
       };
-      console.log(userResponse);
+
+      if (tweetResponses.length > 0) {
+        axios.post("/rq1/response", userResponse).then((res) => {
+          console.log(res);
+        });
+      }
       // props.setAccIndex(props.accIndex + 1);
     }
   }, [accountResponse]);

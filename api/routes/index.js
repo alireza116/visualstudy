@@ -9,18 +9,34 @@ const Response = mongoose.model("response", responseSchema);
 
 router.post("/preq", (req, res) => {
   console.log(req.body);
-  res.json(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { preq: req.body },
+    (err, doc) => {
+      if (err) req.statusCode(404).send(err);
+      else res.json(req.body);
+    }
+  );
 });
 
 router.post("/postq", (req, res) => {
   console.log(req.body);
-  res.json(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { postq: req.body },
+    (err, doc) => {
+      if (err) req.statusCode(404).send(err);
+      else res.json(req.body);
+    }
+  );
 });
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
     let usertoken = randomstring.generate(8);
-    let [accounts, accGroup] = getAccAssignments();
+    let [accounts, accGroup, emotionSort] = getAccAssignments();
     req.session.accounts = accounts;
     req.session.usertoken = usertoken;
     req.session.accIndex = 0;
@@ -34,6 +50,7 @@ router.get("/consent", (req, res) => {
     let newResponse = new Response({
       usertoken: usertoken,
       "rq1.group": accGroup,
+      "rq1.emotionSort": emotionSort,
       "rq1.accounts": accounts,
       "rq2.group": peopleGroup,
       "rq2.people": people,
@@ -105,6 +122,74 @@ const getPersonAssignment = () => {
 };
 
 const getAccAssignments = () => {
+  let groups = ["block", "mixed"];
+  let emotionSorts = ["angry", "happy"];
+  let group = choose(groups);
+  let emotionSort = choose(emotionSorts);
+  const accGroups = {
+    suspicious_left: [
+      ["veteranstoday", "A"],
+      ["opednews", "C"],
+    ],
+    suspicious_right: [
+      ["amlookout", "B"],
+      ["InvestWatchBlog", "D"],
+    ],
+    trustworthy_left: [
+      ["MotherJones", "E"],
+      ["CNNPolitics", "G"],
+    ],
+    trustworthy_right: [
+      ["nypost", "F"],
+      ["Jerusalem_Post", "H"],
+    ],
+  };
+  let accAssignments = [];
+  if (group == "block") {
+    Object.keys(accGroups).forEach((key) => {
+      let accounts = [...accGroups[key]];
+      let withImageIndex = getRandomInt(2);
+      let noImageIndex = withImageIndex ^ 1;
+      accAssignments.push({
+        account: accounts[withImageIndex][0],
+        accAlias: accounts[withImageIndex][1],
+        block: true,
+        emotionSort: emotionSort,
+        showImage: true,
+      });
+      accAssignments.push({
+        account: accounts[noImageIndex][0],
+        accAlias: accounts[noImageIndex][1],
+        block: true,
+        emotionSort: emotionSort,
+        showImage: false,
+      });
+    });
+  } else if (group == "mixed") {
+    Object.keys(accGroups).forEach((key) => {
+      let accounts = [...accGroups[key]];
+      let withImageIndex = getRandomInt(2);
+      let noImageIndex = withImageIndex ^ 1;
+      accAssignments.push({
+        account: accounts[withImageIndex][0],
+        accAlias: accounts[withImageIndex][1],
+        block: false,
+        emotionSort: null,
+        showImage: true,
+      });
+      accAssignments.push({
+        account: accounts[noImageIndex][0],
+        accAlias: accounts[noImageIndex][1],
+        block: false,
+        emotionSort: null,
+        showImage: false,
+      });
+    });
+  }
+  return [shuffle(accAssignments), group, emotionSort];
+};
+
+const getAccAssignmentsOld = () => {
   let groups = ["block", "mixed"];
   let group = choose(groups);
   const accGroups = {

@@ -43,7 +43,7 @@ const InstructionsMain = (props) => {
       <p>
         In this study, our main goal is to understand how individuals form
         beliefs on
-        <span className={classes.emph}>bias </span>,
+        <span className={classes.emph}> bias </span>,
         <span className={classes.emph}>credibility</span>, and{" "}
         <span className={classes.emph}>political orientation of source</span> of
         tweets.
@@ -103,8 +103,9 @@ const InstructionsMain = (props) => {
       <hr />
       <p>Let's look at example:</p>
       <p>
-        In the animation below, the user determined a tweet is very biased but
-        with a range of uncertainty around their decision.
+        In the animation below, the user determined a tweet is strongly biased
+        and and was highly confident (with a small range of uncertainty around
+        their decision).
       </p>
       <img
         src={process.env.PUBLIC_URL + "/uncertainty1.gif"}
@@ -114,7 +115,8 @@ const InstructionsMain = (props) => {
       <p>
         In the next animation, we can see a user that believes a tweet is
         somewhat unbiased. However, they are not very sure and they think that
-        it's possible that the tweet is moderately biased.
+        it's possible that the tweet is moderately biased, so there is a large
+        range of uncertainty around their decision.
       </p>
       <img
         src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
@@ -157,8 +159,10 @@ const InstructionsMain = (props) => {
         Let's imagine you are assessing the crediblity of another source of news
         on Twitter: <br />
         you believe that{" "}
-        <span className={classes.emph}>the source is very Not Credible</span>,
-        and you are
+        <span className={classes.emph}>
+          the source is definitely Not Credible
+        </span>
+        , and you are
         <span className={classes.emph}> very uncertain</span> of your judgment.{" "}
         <br />
         <br />

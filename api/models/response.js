@@ -13,16 +13,16 @@ const responseSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  prequestionnaire: Schema.Types.Mixed,
-  postquestionnaire: Schema.Types.Mixed,
+  preq: Schema.Types.Mixed,
+  postq: Schema.Types.Mixed,
   rq1: {
     group: String,
-    responses: Schema.Types.Mixed,
+    responses: Schema.Types.Array,
     accounts: Schema.Types.Array,
   },
   rq2: {
     group: String,
-    responses: Schema.Types.Mixed,
+    responses: Schema.Types.Array,
     people: Schema.Types.Array,
   },
 });

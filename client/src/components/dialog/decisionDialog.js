@@ -43,16 +43,9 @@ const DecisionDialog = (props) => {
     elements: [
       {
         type: "comment",
-        name: "textComment",
+        name: "sourceCommeent",
         title:
-          "Please describe how/if the text of the tweets that influenced your decisions about this account?",
-        isRequired: true,
-      },
-      {
-        type: "comment",
-        name: "imageComment",
-        title:
-          "Please describe how/if the image of the tweets that influenced your decisions about this account?",
+          "Please describe how the tweets (text and images) influenced your decisions about this account?",
         isRequired: true,
       },
     ],

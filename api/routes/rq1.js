@@ -7,7 +7,6 @@ const responseSchema = require("../models/response");
 
 const Response = mongoose.model("response", responseSchema);
 
-
 router.post("/data", (req, res) => {
   let accIndex = req.body.accIndex;
   req.session.accIndex = accIndex;
@@ -41,6 +40,21 @@ router.post("/data", (req, res) => {
         res.status(404).send("could not find");
       }
     });
+});
+
+router.post("/response", function (req, res) {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    {
+      $push: { "rq1.responses": req.body },
+    },
+    (err, doc) => {
+      if (err) res.status(404).send("error");
+      else res.status(200).send();
+    }
+  );
 });
 
 function choose(choices) {
@@ -93,7 +107,5 @@ function getDataBlock(data, emotion, blockSize) {
   }
   return outputData;
 }
-
-
 
 module.exports = router;

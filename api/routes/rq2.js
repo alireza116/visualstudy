@@ -63,12 +63,12 @@ const getPersonAssignment = () => {
       };
     });
   }
-  return [shuffle(personAssignments),group];
+  return [shuffle(personAssignments), group];
 };
 
 router.get("/init", (req, res) => {
   let usertoken = req.session.usertoken;
-  let [people,group] = getPersonAssignment();
+  let [people, group] = getPersonAssignment();
   req.session.people = people;
   req.session.personIndex = 0;
   req.session.group = group;
@@ -92,14 +92,13 @@ router.get("/init", (req, res) => {
 
 router.post("/data", (req, res) => {
   let personIndex = req.body.personIndex;
-  //   console.log(personIndex);
   req.session.personIndex = personIndex;
   let people = req.session.people;
-  //   console.log(people);
   let personAssignment = people[personIndex];
   let personName = personAssignment.person;
   let showImage = personAssignment.showImage;
   let idx = personAssignment.imageIdx;
+  console.log(personName);
   csv()
     .fromFile("./public/rq2data.csv")
     .then((jsonObj) => {
@@ -119,6 +118,21 @@ router.post("/data", (req, res) => {
         res.status(404).send("could not find");
       }
     });
+});
+
+router.post("/response", function (req, res) {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    {
+      $push: { "rq2.responses": req.body },
+    },
+    (err, doc) => {
+      if (err) res.status(404).send("error");
+      else res.status(200).send();
+    }
+  );
 });
 
 function choose(choices) {
