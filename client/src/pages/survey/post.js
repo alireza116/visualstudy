@@ -75,7 +75,7 @@ const PostSurveyPage = (props) => {
     console.log("Survey results: " + JSON.stringify(survey.data));
     axios.post("/api/postq", survey.data).then((response) => {
       console.log(response);
-      history.push("/study");
+      history.push("/debrief");
     });
   };
 

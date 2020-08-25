@@ -58,9 +58,11 @@ const Consent = (props) => {
         ></img>
       </div>
       <h1>Consent to Participate in a Research Study (MTurk)</h1>
-
       <p>
-        <b>Title of the Project:</b> Alireza Karduni, College of Computing and
+        <b>Title of Project:</b> Understanding News Bias on Social Media
+      </p>
+      <p>
+        <b>Principal investigator:</b> Alireza Karduni, College of Computing and
         Informatics
       </p>
       <p>
@@ -71,10 +73,7 @@ const Consent = (props) => {
         <b>Co-PIs:</b> Dr. Doug Markant (Department of Psychological Science),
         Ryan Wesslen (College of Computing and Informatics)
       </p>
-      <p>
-        <b>Principal investigator:</b> Dr. Douglas Markant, Department of
-        Psychological Science, UNC Charlotte
-      </p>
+
       <p>
         You are invited to participate in a research study. Participation in
         this research study is voluntary. The information provided on this form

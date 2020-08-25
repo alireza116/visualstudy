@@ -20,9 +20,18 @@ router.post("/preq", (req, res) => {
   );
 });
 
+router.get("/debrief", (req, res) => {
+  if (true) {
+    res.status(200).json({ token: req.session.usertoken });
+  } else {
+    res.status(404).send("Please complete the study first");
+  }
+});
+
 router.post("/postq", (req, res) => {
   console.log(req.body);
   let usertoken = req.session.usertoken;
+  req.session.completed = true;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
     { postq: req.body },

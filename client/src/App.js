@@ -8,6 +8,7 @@ import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
 import InstructionsMainPage from "./pages/instructions/instructionMain";
+import DebriefPage from "./pages/debrief/debrief";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -87,7 +88,9 @@ class App extends React.Component {
                 ></Task2>
               </Route>
               <Route path="/post" component={PostSurveyPage}></Route>
-              <Route path="/debrief"></Route>
+              <Route path="/debrief">
+                <DebriefPage></DebriefPage>
+              </Route>
             </Switch>
           </Container>
           <BottomNav height="7%"></BottomNav>
