@@ -41,7 +41,7 @@ router.get("/consent", (req, res) => {
     req.session.usertoken = usertoken;
     req.session.accIndex = 0;
     req.session.accGroup = accGroup;
-
+    console.log(emotionSort);
     let [people, peopleGroup] = getPersonAssignment();
     req.session.people = people;
     req.session.personIndex = 0;
@@ -125,7 +125,8 @@ const getAccAssignments = () => {
   let groups = ["block", "mixed"];
   let emotionSorts = ["angry", "happy"];
   let group = choose(groups);
-  let emotionSort = choose(emotionSorts);
+
+  let emotionSort = group == "block" ? choose(emotionSorts) : "None";
   const accGroups = {
     suspicious_left: [
       ["veteranstoday", "A"],

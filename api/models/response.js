@@ -17,6 +17,7 @@ const responseSchema = new Schema({
   postq: Schema.Types.Mixed,
   rq1: {
     group: String,
+    emotionSort: String,
     responses: Schema.Types.Array,
     accounts: Schema.Types.Array,
   },
