@@ -49,10 +49,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
-        className="app"
-        style={{ height: "100%", overflow: "auto", lineHeight: "150%" }}
-      >
+      <div className="app" style={{ height: "100%", lineHeight: "150%" }}>
         <Router>
           <NavBar height={"7%"} className="navBar"></NavBar>
           <Container

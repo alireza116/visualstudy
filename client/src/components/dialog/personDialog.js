@@ -33,7 +33,7 @@ const PeresonDialog = (props) => {
         choices: [
           "Not at all familiar",
           "Slightly familiar",
-          "Someewhat familiar",
+          "Somewhat familiar",
           "Moderately familiar",
           "Extremely familiar",
         ],
