@@ -70,7 +70,14 @@ const Debrief = (props) => {
       <hr />
       <h3>{token}</h3>
       <hr />
-      Thanks again.
+      <p>
+        For questions about this research, you may contact Alireza Karduni
+        (akarduni@uncc.edu) and Dr. Wenwen Dou (Wdou1@uncc.edu). If you have
+        questions about your rights as a research participant, or wish to obtain
+        information, ask questions, or discuss any concerns about this study
+        with someone other than the researcher(s), please contact the Office of
+        Research Protections and Integrity at 704-687-1871 or uncc-irb@uncc.edu.
+      </p>
     </Container>
   );
 };
