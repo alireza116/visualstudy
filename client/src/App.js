@@ -9,6 +9,8 @@ import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
 import InstructionsMainPage from "./pages/instructions/instructionMain";
 import DebriefPage from "./pages/debrief/debrief";
+import InstructionsTask1 from "./pages/instructions/instructionsTask1";
+import InstructionsTask2 from "./pages/instructions/instructionsTask2";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -66,11 +68,16 @@ class App extends React.Component {
                 }}
               />
               <Route path="/consent" component={ConsentPage}></Route>
+              <Route path="/pre" component={PreSurveyPage}></Route>
               <Route
                 path="/instructions"
                 component={InstructionsMainPage}
               ></Route>
-              <Route path="/pre" component={PreSurveyPage}></Route>
+
+              <Route path="/instructionst1">
+                <InstructionsTask1></InstructionsTask1>
+              </Route>
+
               <Route path="/task1">
                 <Task1
                   answerCount={this.state.answerCount}
@@ -78,6 +85,10 @@ class App extends React.Component {
                   accIndex={this.state.accIndex}
                   setAccIndex={this.setAccIndex}
                 ></Task1>
+              </Route>
+
+              <Route path="/instructionst2">
+                <InstructionsTask2></InstructionsTask2>
               </Route>
               <Route path="/task2">
                 <Task2

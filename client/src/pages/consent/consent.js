@@ -57,7 +57,7 @@ const Consent = (props) => {
           height="120px"
         ></img>
       </div>
-      <h1>Consent to Participate in a Research Study (MTurk)</h1>
+      <h1>Consent to Participate in a Research Study</h1>
       <p>
         <b>Title of Project:</b> Understanding News Bias on Social Media
       </p>

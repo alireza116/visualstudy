@@ -126,9 +126,8 @@ const Task2Page = (props) => {
         tweetResponses: tweetResponses,
         accountResponse: accountResponse,
         personAssignment: personAssignment,
+        time: Date.now(),
       };
-
-      console.log(userResponse);
 
       if (tweetResponses.length > 0) {
         axios.post("/rq2/response", userResponse).then((res) => {

@@ -29,11 +29,10 @@ const BottomNav = (props) => {
   const history = useHistory();
   let location = useLocation();
   //   console.log(history);
-  const setHistory = (newValue) => {
-    history.push(newValue);
-  };
+  // const setHistory = (newValue) => {
+  //   history.push(newValue);
+  // };
 
-  console.log(location.pathname);
   return (
     <BottomNavigation
       value={location.pathname}

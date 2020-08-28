@@ -116,6 +116,7 @@ const Task1Page = (props) => {
         tweetResponses: tweetResponses,
         accountResponse: accountResponse,
         accAssignment: accAssignment,
+        time: Date.now(),
       };
 
       if (tweetResponses.length > 0) {
@@ -153,8 +154,7 @@ const Task1Page = (props) => {
       fetchData();
     } else {
       axios.get("/rq2/init").then((res) => {
-        console.log(res);
-        history.push("/task2");
+        history.push("instructionst2");
       });
     }
   }, [props.accIndex]);

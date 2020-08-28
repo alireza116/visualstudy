@@ -29,7 +29,7 @@ const InstructionsMain = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const handleConsent = () => {
-    history.push("/task1");
+    history.push("instructionst1");
     // axios.get("/consent").then((result) => {
     //   //   console.log(result.data);
 
