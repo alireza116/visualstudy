@@ -70,7 +70,7 @@ const InstructionsMain = (props) => {
         tweets.
       </p>
       <p>
-        To do this we have collected tweets from multiple sources of news on
+        To do this, we have collected tweets from multiple sources of news on
         Twitter. These tweets are about four years old and include many
         different domestic and international topics. We will not show you the
         source name (i.e., Twitter account that posted the tweet) so that your
@@ -159,7 +159,8 @@ const InstructionsMain = (props) => {
         First use your mouse to hover on the chart. <br />
         Click to select the line that best represents your belief. <br />
         Then use the mouse to select the range of plausible alternatives that
-        represents how uncertain you are about your belief.
+        represents how uncertain you are about your belief. <br />
+        If you want to change your decision, you can click on reset!
       </p>
       <span className={classes.highlight}>
         {" "}
@@ -177,8 +178,8 @@ const InstructionsMain = (props) => {
       <h4>Another scenario:</h4>
       <p>
         {" "}
-        Let's imagine you are assessing the crediblity of another source of news
-        on Twitter: <br />
+        Imagine you are assessing the crediblity of another source of news on
+        Twitter: <br />
         you believe that{" "}
         <span className={classes.emph}>
           the source is definitely Not Credible
@@ -225,8 +226,8 @@ const InstructionsMain = (props) => {
         </li>
         <li>You can click on "View More Tweets" to see the next one.</li>
         <li>
-          Whenever you feel like you have made your judgment about that account,
-          click on "Make a decision"
+          Whenever you have made your judgment about that account, click on
+          "Make a decision"
         </li>
         <li>
           A popup will appear and you will answer the questions about each
