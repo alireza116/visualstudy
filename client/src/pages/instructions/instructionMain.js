@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Button, Container } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BinaryChoice from "../../components/choice/binaryChoice";
+import AlertDialog from "../../components/dialog/alertDialog";
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -29,11 +30,31 @@ const InstructionsMain = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const handleConsent = () => {
-    history.push("instructionst1");
-    // axios.get("/consent").then((result) => {
-    //   //   console.log(result.data);
+    if (
+      ("CredibleCertain" in response) &
+      ("notCredibleNotCertain" in response)
+    ) {
+      axios.post("/api/instructions", response).then((res) => {
+        history.push("instructionst1");
+      });
+    } else setOpenAlert(true);
+  };
 
-    // });
+  const [response, setResponse] = useState({});
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleCloseAlert = (value) => {
+    setOpenAlert(false);
+  };
+
+  const handleResponse = (response, index) => {
+    if (response) response.index = index;
+    console.log(response);
+    setResponse((responses) => {
+      responses[index] = response;
+      console.log(responses);
+      return responses;
+    });
   };
 
   return (
@@ -54,14 +75,14 @@ const InstructionsMain = (props) => {
         different domestic and international topics. We will not show you the
         source name (i.e., Twitter account that posted the tweet) so that your
         opinions are not influenced by your prior beliefs about that source. We
-        ask you to base your judgments based on only the information provided to
-        you in this study.
+        ask you to base your judgments on only the information provided to you
+        in this study.
       </p>
       <p className={classes.emph}>First, let’s review important definitions</p>
       <ul>
         <li>
           <span className={classes.emph}>Tweet</span> A piece of news on Twitter
-          that includes a short piece of text, and might or might not include
+          that includes a short piece of text, and may or may not include
           images.
         </li>
         <li>
@@ -127,8 +148,8 @@ const InstructionsMain = (props) => {
       <p className={classes.emph}>Now let's practice with this technique:</p>
       <p>
         {" "}
-        Let's imagine a scenario in which you are submiting your belief about
-        how credible a source of news on Twitter is: <br />
+        Imagine a scenario in which you are submiting your belief about how
+        credible a source of news on Twitter is: <br />
         Assume you believe that{" "}
         <span className={classes.emph}> the source is very Credible</span>, and
         you are
@@ -147,8 +168,8 @@ const InstructionsMain = (props) => {
       :
       <BinaryChoice
         choiceDomain={[0.0, 1.0]}
-        responseIndex={"instructions"}
-        //   handleResponse={handleResponse}
+        responseIndex={"CredibleCertain"}
+        handleResponse={handleResponse}
         question="How Not Credible / Credible is this source?"
         tickLabels={["Not Credible", "", "Credible"]}
       ></BinaryChoice>
@@ -173,8 +194,8 @@ const InstructionsMain = (props) => {
       </p>
       <BinaryChoice
         choiceDomain={[0.0, 1.0]}
-        responseIndex={"instructions"}
-        //   handleResponse={handleResponse}
+        responseIndex={"notCredibleNotCertain"}
+        handleResponse={handleResponse}
         question="How Not Credible / Credible is this source?"
         tickLabels={["Not Credible", "", "Credible"]}
       ></BinaryChoice>
@@ -187,7 +208,7 @@ const InstructionsMain = (props) => {
         </li>
         <li>
           You will evaluate Credibility and Political Orientation of all 16
-          accounts using the method we just discussed.
+          accounts using the method shown above.
         </li>
         <li>
           For each account, we ask that you write in two text boxes, how the the
@@ -214,13 +235,21 @@ const InstructionsMain = (props) => {
       </ul>
       <h4>There are Two tasks</h4>
       <ul>
-        <li>Task 1 includes 8 accounts. Tweets are about different topics.</li>
         <li>
-          Task 2 include 8 other accounts. Tweets for each account are filtered
-          to focus on tweets about specific identities as Donald Trump, Barack
-          Obama, or Emanuel Macron.
+          Task 1 includes 8 different accounts. Tweets are about different
+          topics.
+        </li>
+        <li>
+          Task 2 includes 8 different accounts (different from task 1). The
+          difference is that tweets for each account are filtered to focus
+          specific identities as Donald Trump, Barack Obama, or Emanuel Macron.
         </li>
       </ul>
+      <AlertDialog
+        open={openAlert}
+        onClose={handleCloseAlert}
+        message="Please respond to the two introductory scenarios first!"
+      ></AlertDialog>{" "}
       <div
         style={{
           textAlign: "center",

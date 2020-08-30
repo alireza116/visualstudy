@@ -30,7 +30,11 @@ router.post("/data", (req, res) => {
         return x["screen_name"] == screen_name;
       });
       if (data.length > 0) {
-        let outData = getDataBlock(data, emotionSort, blockSize);
+        // if we want the block design
+        // let outData = getDataBlock(data, emotionSort, blockSize);
+        // if we want the no block design
+        let outData = getDataNoBlock(data, emotionSort, blockSize);
+        //
         res.status(200).json({
           data: outData,
           showImage: showImage,
@@ -84,6 +88,45 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function getDataNoBlock(data, emotion, blockSize) {
+  let happy = data.filter((x) => x["selection"] == "happy");
+  happy = happy.sort((a, b) => {
+    return +b["dpfc_happy"] - +a["dpfc_happy"];
+  });
+  let angry = data.filter((x) => x["selection"] == "angry");
+  angry = angry.sort((a, b) => {
+    return +b["dpfc_angry"] - +a["dpfc_angry"];
+  });
+  let outputData = [];
+  // for (let i = 0; i < happy.length; i = i + blockSize) {
+  //   if (emotion == "happy") {
+  //     outputData.push(...happy.slice(i, i + blockSize));
+  //     outputData.push(...angry.slice(i, i + blockSize));
+  //   } else if (emotion == "angry") {
+  //     outputData.push(...angry.slice(i, i + blockSize));
+  //     outputData.push(...happy.slice(i, i + blockSize));
+  //   }
+  // }
+  if (blockSize === 10) {
+    if (emotion == "happy") {
+      outputData = happy;
+    } else if (emotion == "angry") {
+      outputData = angry;
+    }
+  } else {
+    for (let i = 0; i < happy.length; i = i + blockSize) {
+      if (emotion == "happy") {
+        outputData.push(...happy.slice(i, i + blockSize));
+        outputData.push(...angry.slice(i, i + blockSize));
+      } else if (emotion == "angry") {
+        outputData.push(...angry.slice(i, i + blockSize));
+        outputData.push(...happy.slice(i, i + blockSize));
+      }
+    }
+  }
+  return outputData;
 }
 
 function getDataBlock(data, emotion, blockSize) {

@@ -184,13 +184,11 @@ const Task1Page = (props) => {
       <Instructions accAlias={accAssignment.accAlias}>
         <h4>Task1: Account {props.accIndex + 1}/8</h4>
         <p>
-          In this page, you can view tweets from the profile of a Twitter
-          account. We have masked the real name of the account. By clicking on
-          the See More button, you can see more tweets from this account. For
-          each tweet, we ask you to elicit your judgmenet of that individual
-          tweet. When you feel like you are ready to judge the trustworthiness
-          of the account after evaluating multiple tweets, click on Make a
-          Decision. A popup will appear with three questions about the account.
+          Click on <b>See More Tweets</b> to see more tweets from this account.
+          When you feel like you are ready to evaluate the the account of the
+          account after evaluating multiple tweets, click on{" "}
+          <b>Make a Decision</b>. A popup will appear with three questions about
+          the account.
         </p>
       </Instructions>
       <div>{choiceContent}</div>

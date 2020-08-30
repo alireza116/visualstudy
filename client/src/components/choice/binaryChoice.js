@@ -61,7 +61,8 @@ const BinaryChoice = (props) => {
               .ticks(tickLabels.length - 1)
               .tickFormat((d, i) => tickLabels[i])
           )
-          .attr("pointer-events", "none");
+          .attr("pointer-events", "none")
+          .style("font-size", "12px");
 
         let rect = g
           .append("rect")

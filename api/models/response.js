@@ -15,6 +15,7 @@ const responseSchema = new Schema({
   },
   preq: Schema.Types.Mixed,
   postq: Schema.Types.Mixed,
+  instructions: Schema.Types.Mixed,
   rq1: {
     group: String,
     emotionSort: String,

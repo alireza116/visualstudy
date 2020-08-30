@@ -14,7 +14,7 @@ router.post("/preq", (req, res) => {
     { usertoken: usertoken },
     { preq: req.body },
     (err, doc) => {
-      if (err) req.statusCode(404).send(err);
+      if (err) req.status(404).send(err);
       else res.json(req.body);
     }
   );
@@ -36,8 +36,21 @@ router.post("/postq", (req, res) => {
     { usertoken: usertoken },
     { postq: req.body },
     (err, doc) => {
-      if (err) req.statusCode(404).send(err);
-      else res.json(req.body);
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
+});
+
+router.post("/instructions", (req, res) => {
+  let usertoken = req.session.usertoken;
+  console.log(req.body);
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { instructions: req.body },
+    (err, doc) => {
+      if (err) res.status(404).send(err);
+      else res.status(200).send("success");
     }
   );
 });
@@ -136,6 +149,7 @@ const getAccAssignments = () => {
   let group = choose(groups);
 
   let emotionSort = group == "block" ? choose(emotionSorts) : "None";
+
   const accGroups = {
     suspicious_left: [
       ["veteranstoday", "A"],

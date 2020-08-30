@@ -35,7 +35,7 @@ const InstructionsTask2 = (props) => {
   };
 
   return (
-    <Container maxWidth="lg" className={classes.instructContainer}>
+    <Container maxWidth="md" className={classes.instructContainer}>
       <h3>Task 2 Instructions</h3>
       <h3>Please read these instructions carefully</h3>
       <p>

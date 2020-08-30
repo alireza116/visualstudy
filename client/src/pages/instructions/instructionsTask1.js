@@ -35,23 +35,23 @@ const InstructionsTask1 = (props) => {
   };
 
   return (
-    <Container maxWidth="lg" className={classes.instructContainer}>
+    <Container maxWidth="md" className={classes.instructContainer}>
       <h3>Task 1 Instructions</h3>
       <h3>Please read these instructions carefully</h3>
       <p>
         In this Task, you will evaluate tweets from the profile of 8 Twitter
-        accounts. We have masked the real name of the account.
+        accounts. We have masked the name each account.
       </p>
       <ul>
         <li>
           By clicking on the See More button, you can see more tweets from this
-          account. For each tweet, we ask you to elicit your judgmenet of that
-          individual tweet.{" "}
+          account. For each tweet, we elicit your judgmenet of that individual
+          tweet.{" "}
         </li>
         <li>
           When you feel like you are ready to judge the trustworthiness of the
           account after evaluating multiple tweets, click on Make a Decision. A
-          popup will appear with three questions about the crediblity, political
+          popup will appear with questions about the crediblity, political
           orientation of the account, as well as an open ended question.
         </li>
       </ul>
