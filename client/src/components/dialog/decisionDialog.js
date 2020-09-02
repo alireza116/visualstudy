@@ -30,13 +30,20 @@ const DecisionDialog = (props) => {
 
   const onComplete = (survey, options) => {
     //Write survey results into database
-    results = { ...survey.data };
-    results["credibilityChoice"] = trustworthyChoice;
-    results["politicalOrientationChoice"] = politicalStanceChoice;
-    props.setAccountResponse(results);
-    setTrustworthyChoice(null);
-    setPoliticalStanceChoice(null);
-    props.onClose();
+
+    if (politicalStanceChoice && trustworthyChoice) {
+      results = { ...survey.data };
+      results["credibilityChoice"] = trustworthyChoice;
+      results["politicalOrientationChoice"] = politicalStanceChoice;
+      props.setAccountResponse(results);
+      setTrustworthyChoice(null);
+      setPoliticalStanceChoice(null);
+      props.onClose();
+    } else {
+      alert(
+        "please complete the credibility and political orientation questions."
+      );
+    }
   };
 
   const json = {
@@ -59,6 +66,8 @@ const DecisionDialog = (props) => {
     ) : (
       ""
     );
+
+  // let survey = <Survey.Survey model={model} onComplete={onComplete} />;
   //   model.showCompletedPage = false;
   model.completedHtml = "<p>Thanks for completing this task</p>";
   return (

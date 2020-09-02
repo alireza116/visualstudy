@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, Typography } from "@material-ui/core";
+import PersonIcon from "@material-ui/icons/Person";
+import { teal } from "@material-ui/core/colors";
 
 var parser = new DOMParser();
 
@@ -20,7 +22,7 @@ const useStyles = makeStyles({
     margin: "0 auto",
     marginBottom: "10px",
     marginTop: "25px",
-    paddingLeft: "50px",
+    // paddingLeft: "10px",
     paddingRight: "50px",
     paddingTop: "20px",
     paddingBottom: "20px",
@@ -29,11 +31,39 @@ const useStyles = makeStyles({
 
 const Tweet = (props) => {
   const classes = useStyles();
-
+  console.log();
   return (
     <Card className={classes.tweetCard}>
       <div style={{ width: "100%" }}>
-        <div style={{ width: "100%", float: "left" }}>
+        <div
+          style={{
+            float: "left",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+          }}
+        >
+          <div
+            style={{
+              borderRadius: "50%",
+              width: "50px",
+              height: "50px",
+              backgroundColor: "grey",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PersonIcon></PersonIcon>
+          </div>
+        </div>
+        <div style={{ width: "80%", float: "left" }}>
+          <p style={{ margin: 0 }}>
+            <span style={{ fontWeight: "bold" }}>
+              {" "}
+              Twitter Account {props.accAlias}{" "}
+            </span>
+            <span style={{ color: "grey" }}>@{props.accAlias}News</span>
+          </p>
           <Typography variant="body1" style={{ marginBottom: "10px" }}>
             {parseString(props.text)}
           </Typography>

@@ -11,10 +11,6 @@ const Instructions = (props) => {
         margin: "0 auto",
       }}
     >
-      <Typography variant="h5" align="center">
-        Twitter Account{" "}
-        <span style={{ fontWeight: "bold" }}>{props.accAlias}</span>
-      </Typography>
       <div>{props.children}</div>
       <Divider></Divider>
     </div>

@@ -8,7 +8,7 @@ import Tweet from "../../components/tweet/tweet";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Divider, Typography } from "@material-ui/core";
 import $ from "jquery";
 
 const Task2Page = (props) => {
@@ -93,6 +93,7 @@ const Task2Page = (props) => {
           text={data[i].clean_text}
           src={`/rq2/${data[i].idx}.png`}
           showImage={showImage}
+          accAlias={personAssignment.accAlias}
         ></Tweet>
       );
       content.push(
@@ -155,11 +156,9 @@ const Task2Page = (props) => {
       setTimeout(() => {
         setLoadingOpacity(0);
         setTweetResponses([]);
-        console.log(result.data.data);
         setData(result.data.data);
-        setShowImage(result.data.showImage);
-        console.log(result.data.personAssignment);
         setpersonAssignment(result.data.personAssignment);
+        setShowImage(result.data.showImage);
         setAnswerCount(0);
         handleOpenPersonDialog();
       }, 1000);
@@ -167,7 +166,7 @@ const Task2Page = (props) => {
     if ((props.personIndex >= 0) & (props.personIndex < 8)) {
       fetchData();
     } else {
-      history.push("/post");
+      history.push("post");
     }
   }, [props.personIndex]);
 
@@ -176,7 +175,7 @@ const Task2Page = (props) => {
       if (answerCount < data.length) {
         addContent();
       } else {
-        history.push("/post");
+        setOpenDialog(true);
       }
     }
   }, [data, answerCount, showImage]);
@@ -194,7 +193,15 @@ const Task2Page = (props) => {
       ref={divContainer}
     >
       <Instructions accAlias={personAssignment.accAlias}>
-        <h4>Task2: Account {props.personIndex + 1}/8</h4>
+        <Typography variant="h5" align="center">
+          {props.personIndex + 1}/8
+        </Typography>
+        <Typography variant="h6" align="center">
+          Account Alias:{" "}
+          <span style={{ fontWeight: "bold" }}>
+            {personAssignment.accAlias}
+          </span>
+        </Typography>
         <p>
           Click on <b>See More Tweets</b> to see more tweets from this account.
           When you feel like you are ready to evaluate the the account of the

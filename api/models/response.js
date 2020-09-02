@@ -27,6 +27,7 @@ const responseSchema = new Schema({
     responses: Schema.Types.Array,
     people: Schema.Types.Array,
   },
+  task: Schema.Types.Number,
 });
 
 module.exports = responseSchema;

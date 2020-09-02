@@ -35,7 +35,7 @@ const InstructionsMain = (props) => {
       ("notCredibleNotCertain" in response)
     ) {
       axios.post("/api/instructions", response).then((res) => {
-        history.push("instructionst1");
+        history.push("instructions1");
       });
     } else setOpenAlert(true);
   };
@@ -203,21 +203,26 @@ const InstructionsMain = (props) => {
       <hr />
       <h4>What will you go through in this study</h4>
       <ul>
-        <li>You will evaluate 16 accounts</li>
+        <li>You will evaluate 8 accounts</li>
         <li>
-          Tweets from these accounts, include text, and could include images
+          Tweets from these accounts, include text, and may or may not include
+          images
         </li>
         <li>
-          You will evaluate Credibility and Political Orientation of all 16
+          {" "}
+          For each account, You will go through tweets one by one and evalute
+          how Biased each tweet is.
+        </li>
+        <li>
+          You will evaluate Credibility and Political Orientation of all 8
           accounts using the method shown above.
         </li>
         <li>
-          For each account, we ask that you write in two text boxes, how the the
-          text and images influenced your judgment. If the account had no
-          images, you can type N/A in the respective box.
+          We ask that you write in a text box, how the tweet text and images
+          influenced your judgment for each of the accounts.
         </li>
       </ul>
-      <h4>For each account</h4>
+      {/* <h4>For each account</h4>
       <ul>
         <li>
           {" "}
@@ -233,8 +238,8 @@ const InstructionsMain = (props) => {
           A popup will appear and you will answer the questions about each
           account
         </li>
-      </ul>
-      <h4>There are Two tasks</h4>
+      </ul> */}
+      {/* <h4>There are Two tasks</h4>
       <ul>
         <li>
           Task 1 includes 8 different accounts. Tweets are about different
@@ -245,7 +250,7 @@ const InstructionsMain = (props) => {
           difference is that tweets for each account are filtered to focus
           specific identities as Donald Trump, Barack Obama, or Emanuel Macron.
         </li>
-      </ul>
+      </ul> */}
       <AlertDialog
         open={openAlert}
         onClose={handleCloseAlert}

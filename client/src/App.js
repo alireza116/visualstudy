@@ -27,6 +27,7 @@ class App extends React.Component {
     answerCount: 0,
     accIndex: null,
     personIndex: null,
+    task: 2,
   };
 
   // componentWillMount() {
@@ -44,6 +45,10 @@ class App extends React.Component {
 
   setAccIndex = (newValue) => {
     this.setState({ accIndex: newValue });
+  };
+
+  setTaskNumber = (newValue) => {
+    this.setState({ task: newValue });
   };
 
   setPersonIndex = (newValue) => {
@@ -67,14 +72,41 @@ class App extends React.Component {
                   return <Redirect to="/consent" />;
                 }}
               />
-              <Route path="/consent" component={ConsentPage}></Route>
+              <Route path="/consent">
+                <ConsentPage setTaskNumber={this.setTaskNumber}></ConsentPage>
+              </Route>
               <Route path="/pre" component={PreSurveyPage}></Route>
               <Route
                 path="/instructions"
                 component={InstructionsMainPage}
               ></Route>
 
-              <Route path="/instructionst1">
+              <Route path="/task">
+                {this.state.task === 1 ? (
+                  <Task1
+                    answerCount={this.state.answerCount}
+                    setAnswerCount={this.setAnswerCount}
+                    accIndex={this.state.accIndex}
+                    setAccIndex={this.setAccIndex}
+                  ></Task1>
+                ) : (
+                  <Task2
+                    answerCount={this.state.answerCount}
+                    setAnswerCount={this.setAnswerCount}
+                    personIndex={this.state.personIndex}
+                    setPersonIndex={this.setPersonIndex}
+                  ></Task2>
+                )}
+              </Route>
+
+              <Route path="/instructions1">
+                {this.state.task === 1 ? (
+                  <InstructionsTask1></InstructionsTask1>
+                ) : (
+                  <InstructionsTask2></InstructionsTask2>
+                )}
+              </Route>
+              {/* <Route path="/instructionst1">
                 <InstructionsTask1></InstructionsTask1>
               </Route>
 
@@ -97,7 +129,7 @@ class App extends React.Component {
                   personIndex={this.state.personIndex}
                   setPersonIndex={this.setPersonIndex}
                 ></Task2>
-              </Route>
+              </Route> */}
               <Route path="/post" component={PostSurveyPage}></Route>
               <Route path="/debrief">
                 <DebriefPage></DebriefPage>

@@ -7,7 +7,7 @@ import Tweet from "../../components/tweet/tweet";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Divider, Typography } from "@material-ui/core";
 import $ from "jquery";
 
 // let index = 0;
@@ -77,6 +77,7 @@ const Task1Page = (props) => {
 
   const addContent = () => {
     let content = [];
+    console.log(accAssignment);
     for (let i = 0; i <= answerCount; i++) {
       content.push(
         <Tweet
@@ -84,6 +85,7 @@ const Task1Page = (props) => {
           text={data[i].clean_text}
           src={`/rq1/${data[i].idx}.png`}
           showImage={showImage}
+          accAlias={accAssignment.accAlias}
         ></Tweet>
       );
       content.push(
@@ -144,18 +146,20 @@ const Task1Page = (props) => {
       setTimeout(() => {
         setLoadingOpacity(0);
         setTweetResponses([]);
+        setAccAssignment(result.data.accAssignment);
         setData(result.data.data);
         setShowImage(result.data.showImage);
-        setAccAssignment(result.data.accAssignment);
         setAnswerCount(0);
       }, 1000);
     }
-    if (props.accIndex < 8) {
+
+    if ((props.accIndex >= 0) & (props.accIndex < 8)) {
       fetchData();
     } else {
-      axios.get("/rq2/init").then((res) => {
-        history.push("instructionst2");
-      });
+      // axios.get("/rq2/init").then((res) => {
+      //   history.push("post");
+      // });
+      history.push("post");
     }
   }, [props.accIndex]);
 
@@ -164,7 +168,7 @@ const Task1Page = (props) => {
       if (answerCount < data.length) {
         addContent();
       } else {
-        history.push("/post");
+        setOpenDialog(true);
       }
     }
   }, [data, answerCount, showImage]);
@@ -181,8 +185,14 @@ const Task1Page = (props) => {
       }}
       ref={divContainer}
     >
-      <Instructions accAlias={accAssignment.accAlias}>
-        <h4>Task1: Account {props.accIndex + 1}/8</h4>
+      <Instructions>
+        <Typography variant="h5" align="center">
+          {props.accIndex + 1}/8
+        </Typography>
+        <Typography variant="h6" align="center">
+          Account Alias:{" "}
+          <span style={{ fontWeight: "bold" }}>{accAssignment.accAlias}</span>
+        </Typography>
         <p>
           Click on <b>See More Tweets</b> to see more tweets from this account.
           When you feel like you are ready to evaluate the the account of the

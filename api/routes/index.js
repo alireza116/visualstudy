@@ -68,7 +68,8 @@ router.get("/consent", (req, res) => {
     req.session.people = people;
     req.session.personIndex = 0;
     req.session.peopleGroup = peopleGroup;
-
+    // req.session.task = choose([1, 2]);
+    req.session.task = 1;
     let newResponse = new Response({
       usertoken: usertoken,
       "rq1.group": accGroup,
@@ -76,6 +77,7 @@ router.get("/consent", (req, res) => {
       "rq1.accounts": accounts,
       "rq2.group": peopleGroup,
       "rq2.people": people,
+      task: req.session.task,
     });
 
     newResponse.save(function (err) {
@@ -86,6 +88,7 @@ router.get("/consent", (req, res) => {
         peopleGroup: peopleGroup,
         accounts: accounts,
         people: people,
+        task: req.session.task,
       });
     });
   } else {
@@ -93,6 +96,8 @@ router.get("/consent", (req, res) => {
       token: req.session.usertoken,
       group: req.session.group,
       accounts: req.session.accounts,
+      people: req.session.people,
+      task: req.session.task,
     });
   }
 });
@@ -109,9 +114,12 @@ const getPersonAssignment = () => {
     [117, "Barack Obama", "O"],
     [132, "Kim Jong-un", "P"],
   ];
+  //test
   let group = choose(groups);
+  // let group = "image";
   let clusterNamesCopy = shuffle([...clusterNames]);
   let personAssignments;
+  // let imageIndexes = ["happy_img_idx", "angry_img_idx"];
   if (group === "image") {
     personAssignments = clusterNamesCopy.map((person, index) => {
       return index < 4

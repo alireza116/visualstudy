@@ -66,9 +66,13 @@ const BottomNav = (props) => {
         value="/instructions"
         classes={classes}
       />
-      <BottomNavigationAction label="Task 1" value="/task1" classes={classes} />
-      <BottomNavigationAction label="Task 2" value="/task2" classes={classes} />
-      <BottomNavigationAction label="Post" value="/post" classes={classes} />
+      <BottomNavigationAction label="Task" value="/task" classes={classes} />
+      {/* <BottomNavigationAction label="Task 2" value="/task2" classes={classes} /> */}
+      <BottomNavigationAction
+        label="Post-questionaire"
+        value="/post"
+        classes={classes}
+      />
       <BottomNavigationAction
         label="Debrief"
         value="/debrief"

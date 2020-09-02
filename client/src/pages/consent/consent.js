@@ -30,6 +30,9 @@ const Consent = (props) => {
   const handleConsent = () => {
     axios.get("/api/consent").then((result) => {
       //   console.log(result.data);
+      console.log(props.setTaskNumber);
+      console.log(result.data);
+      props.setTaskNumber(+result.data.task);
       history.push("/pre");
     });
   };
