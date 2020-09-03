@@ -9,6 +9,7 @@ var rq1Router = require("./api/routes/rq1");
 var rq2Router = require("./api/routes/rq2");
 const mongoose = require("mongoose");
 let config;
+// RYAN Check out this link for config vars on heroku https://devcenter.heroku.com/articles/config-vars
 if (process.env.NODE_ENV === "production") {
   config = {
     USERNAME: process.env.DB_USERNAME,
