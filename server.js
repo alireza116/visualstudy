@@ -8,7 +8,17 @@ var indexRouter = require("./api/routes/index");
 var rq1Router = require("./api/routes/rq1");
 var rq2Router = require("./api/routes/rq2");
 const mongoose = require("mongoose");
-const config = require("./api/config/config");
+const config;
+if (process.env.NODE_ENV === "production") {
+  config = {
+    "USERNAME": process.env.DB_USERNAME,
+    "PASSWORD": process.env.DB_PASSWORD
+  }
+  
+} else {
+  config = require("./api/config/config");
+}
+// const config = require("./api/config/config");
 
 const url = `mongodb+srv://${config.USERNAME}:${config.PASSWORD}@cluster0.7mtj9.mongodb.net/thesisstudy?retryWrites=true&w=majority`;
 
