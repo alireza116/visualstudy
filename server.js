@@ -8,13 +8,12 @@ var indexRouter = require("./api/routes/index");
 var rq1Router = require("./api/routes/rq1");
 var rq2Router = require("./api/routes/rq2");
 const mongoose = require("mongoose");
-const config;
+let config;
 if (process.env.NODE_ENV === "production") {
   config = {
-    "USERNAME": process.env.DB_USERNAME,
-    "PASSWORD": process.env.DB_PASSWORD
-  }
-  
+    USERNAME: process.env.DB_USERNAME,
+    PASSWORD: process.env.DB_PASSWORD,
+  };
 } else {
   config = require("./api/config/config");
 }
