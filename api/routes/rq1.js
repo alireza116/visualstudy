@@ -3,9 +3,11 @@ const router = express.Router();
 const csv = require("csvtojson");
 const randomstring = require("randomstring");
 const mongoose = require("mongoose");
+// const Response = require("../models/response");
+
 const responseSchema = require("../models/response");
 
-const Response = mongoose.model("response", responseSchema);
+const Response = mongoose.model("tresponse", responseSchema);
 
 router.post("/data", (req, res) => {
   let accIndex = req.body.accIndex;
@@ -48,11 +50,15 @@ router.post("/data", (req, res) => {
 
 router.post("/response", function (req, res) {
   // console.log(req.body);
+  let update = {};
+  update[`rq1.responses.${req.session.accIndex}`] = req.body;
+  console.log(update);
   let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
     {
-      $push: { "rq1.responses": req.body },
+      // $push: { "rq1.responses": req.body },
+      $set: update,
     },
     (err, doc) => {
       if (err) res.status(404).send("error");

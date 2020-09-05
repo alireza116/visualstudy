@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
+// const Response = require("../models/response");
 const randomstring = require("randomstring");
 // API calls
 
-const Response = mongoose.model("response", responseSchema);
+const Response = mongoose.model("tresponse", responseSchema);
 
 router.post("/preq", (req, res) => {
   console.log(req.body);
@@ -57,19 +58,19 @@ router.post("/instructions", (req, res) => {
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
+    req.session.task = 1;
     let usertoken = randomstring.generate(8);
     let [accounts, accGroup, emotionSort] = getAccAssignments();
     req.session.accounts = accounts;
     req.session.usertoken = usertoken;
     req.session.accIndex = 0;
     req.session.accGroup = accGroup;
-    console.log(emotionSort);
     let [people, peopleGroup] = getPersonAssignment();
     req.session.people = people;
     req.session.personIndex = 0;
     req.session.peopleGroup = peopleGroup;
     // req.session.task = choose([1, 2]);
-    req.session.task = 1;
+
     let newResponse = new Response({
       usertoken: usertoken,
       "rq1.group": accGroup,
@@ -152,6 +153,83 @@ const getPersonAssignment = () => {
 };
 
 const getAccAssignments = () => {
+  let groups = ["happy", "angry", "mixed"];
+  // let emotionSorts = ["angry", "happy"];
+  let group = choose(groups);
+
+  let emotionSort = group;
+
+  const accGroups = {
+    suspicious_left: [
+      ["veteranstoday", "A"],
+      ["opednews", "C"],
+    ],
+    suspicious_right: [
+      ["amlookout", "B"],
+      ["InvestWatchBlog", "D"],
+    ],
+    trustworthy_left: [
+      ["MotherJones", "E"],
+      ["CNNPolitics", "G"],
+    ],
+    trustworthy_right: [
+      ["nypost", "F"],
+      ["Jerusalem_Post", "H"],
+    ],
+  };
+  let accAssignments = [];
+  if (group !== "mixed") {
+    Object.keys(accGroups).forEach((key) => {
+      let accounts = [...accGroups[key]];
+      let withImageIndex = getRandomInt(2);
+      let noImageIndex = withImageIndex ^ 1;
+      accAssignments.push({
+        account: accounts[withImageIndex][0],
+        accAlias: accounts[withImageIndex][1],
+        block: true,
+        emotionSort: emotionSort,
+        showImage: true,
+      });
+      accAssignments.push({
+        account: accounts[noImageIndex][0],
+        accAlias: accounts[noImageIndex][1],
+        block: true,
+        emotionSort: emotionSort,
+        showImage: false,
+      });
+    });
+  } else if (group == "mixed") {
+    Object.keys(accGroups).forEach((key) => {
+      let accounts = [...accGroups[key]];
+      let withImageIndex = getRandomInt(2);
+      let noImageIndex = withImageIndex ^ 1;
+      accAssignments.push({
+        account: accounts[withImageIndex][0],
+        accAlias: accounts[withImageIndex][1],
+        block: false,
+        emotionSort: emotionSort,
+        showImage: true,
+      });
+      accAssignments.push({
+        account: accounts[noImageIndex][0],
+        accAlias: accounts[noImageIndex][1],
+        block: false,
+        emotionSort: emotionSort,
+        showImage: false,
+      });
+    });
+  }
+  return [shuffle(accAssignments), group, emotionSort];
+};
+
+// accAssignmentsTest = { happy: 0, angry: 0, mixed: 0 };
+// for (var i = 0; i <= 1000; i++) {
+//   accAssignmentsTest[getAccAssignments()[1]]++;
+// }
+
+// console.log(accAssignmentsTest);
+
+const getAccAssignmentsOld2 = () => {
   let groups = ["block", "mixed"];
   let emotionSorts = ["angry", "happy"];
   let group = choose(groups);

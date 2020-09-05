@@ -34,6 +34,7 @@ const Task1Page = (props) => {
   const divContainer = useRef(null);
 
   const handleResponse = (response, index) => {
+    console.log(response);
     if (response) response.index = index;
     setTweetResponses((responses) => {
       responses[index] = response;
@@ -59,7 +60,7 @@ const Task1Page = (props) => {
   };
 
   const handleDecision = () => {
-    console.log(tweetResponses);
+    // console.log(tweetResponses);
     if (answerCount >= minTweets - 1) {
       handleOpenDialog();
     } else {
@@ -69,7 +70,11 @@ const Task1Page = (props) => {
 
   const handleAddMoreClick = () => {
     if (tweetResponses[answerCount]) {
-      setAnswerCount(answerCount + 1);
+      if (tweetResponses[answerCount].CI) {
+        setAnswerCount(answerCount + 1);
+      } else {
+        setOpenAlertMoreTweet(true);
+      }
     } else {
       setOpenAlertMoreTweet(true);
     }
@@ -77,7 +82,7 @@ const Task1Page = (props) => {
 
   const addContent = () => {
     let content = [];
-    console.log(accAssignment);
+    // console.log(accAssignment);
     for (let i = 0; i <= answerCount; i++) {
       content.push(
         <Tweet
@@ -239,7 +244,7 @@ const Task1Page = (props) => {
       <AlertDialog
         open={openAlertMoreTweet}
         onClose={handleCloseAlertMoreTweet}
-        message="Please make a decision about the previous tweet to be able to see more!"
+        message="Please provide your belief and uncertainty about the last tweet! Do not double click! Even a really small uncertainty range would work, but no range would not."
       ></AlertDialog>
       <AlertDialog
         open={openAlertAnswerCount}

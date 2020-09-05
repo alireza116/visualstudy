@@ -5,7 +5,7 @@ const randomstring = require("randomstring");
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
 
-const Response = mongoose.model("response", responseSchema);
+const Response = mongoose.model("tresponse", responseSchema);
 
 let groups = ["image", "noImage"];
 
@@ -66,29 +66,29 @@ const getPersonAssignment = () => {
   return [shuffle(personAssignments), group];
 };
 
-router.get("/init", (req, res) => {
-  let usertoken = req.session.usertoken;
-  let [people, group] = getPersonAssignment();
-  req.session.people = people;
-  req.session.personIndex = 0;
-  req.session.group = group;
-  Response.findOneAndUpdate(
-    { usertoken: usertoken },
-    {
-      "rq2.people": people,
-      "rq2.group": group,
-    },
-    {
-      new: true,
-    },
-    function (err, doc) {
-      if (err) {
-        return res.send(500, { error: err });
-      }
-      return res.status(200).json(people);
-    }
-  );
-});
+// router.get("/init", (req, res) => {
+//   let usertoken = req.session.usertoken;
+//   let [people, group] = getPersonAssignment();
+//   req.session.people = people;
+//   req.session.personIndex = 0;
+//   req.session.group = group;
+//   Response.findOneAndUpdate(
+//     { usertoken: usertoken },
+//     {
+//       "rq2.people": people,
+//       "rq2.group": group,
+//     },
+//     {
+//       new: true,
+//     },
+//     function (err, doc) {
+//       if (err) {
+//         return res.send(500, { error: err });
+//       }
+//       return res.status(200).json(people);
+//     }
+//   );
+// });
 
 router.post("/data", (req, res) => {
   let personIndex = req.body.personIndex;
@@ -98,7 +98,7 @@ router.post("/data", (req, res) => {
   let personName = personAssignment.person;
   let showImage = personAssignment.showImage;
   let idx = personAssignment.imageIdx;
-  console.log(personName);
+  // console.log(personName);
   csv()
     .fromFile("./public/rq2data.csv")
     .then((jsonObj) => {
@@ -123,10 +123,16 @@ router.post("/data", (req, res) => {
 router.post("/response", function (req, res) {
   // console.log(req.body);
   let usertoken = req.session.usertoken;
+  let update = {};
+  update[`rq2.responses.${req.session.personIndex}`] = req.body;
+  let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
+    // {
+    //   $push: { "rq2.responses": req.body },
+    // },
     {
-      $push: { "rq2.responses": req.body },
+      $set: update,
     },
     (err, doc) => {
       if (err) res.status(404).send("error");

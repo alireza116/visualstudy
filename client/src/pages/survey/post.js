@@ -41,31 +41,18 @@ const PostSurveyPage = (props) => {
         ],
       },
       {
-        type: "matrix",
-        name: "emotions",
-        isRequired: true,
+        type: "comment",
+        name: "attention1",
         title:
-          "Emotional state: This question consists of a number of words that describe different feelings and emotions. Read each item and then mark the appropriate answer in the space next to that word.\
-        Indicate to what extent you have felt like this in the right now. Use the following scale to record your answers.",
-        columns: [
-          "Very slightly/Not at all",
-          "A little",
-          "Moderately",
-          "Quite a bit",
-          "Extremely",
-        ],
-        rows: [
-          "Alert",
-          "Ashamed",
-          "Upset",
-          "Nervous",
-          "Determined",
-          "Attentive",
-          "Hostile",
-          "Active",
-          "Afraid",
-          "Inspired",
-        ],
+          'Imagine you found yourself in the following situation: "On the morning of an important job interview, you wake up with fever and chills."',
+        isRequired: true,
+      },
+      {
+        type: "comment",
+        name: "attention2",
+        title:
+          'Imagine you found yourself in the following situation: "You stop by a store to grab an item you need. You are in a hurry but the cashier is nowhere to be found."',
+        isRequired: true,
       },
     ],
   };

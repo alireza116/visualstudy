@@ -53,7 +53,7 @@ const DecisionDialog = (props) => {
         name: "sourceCommeent",
         title:
           "Please describe how the tweets (text and images) influenced your decisions about this account?",
-        isRequired: true,
+        isRequired: false,
       },
     ],
   };

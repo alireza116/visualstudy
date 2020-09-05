@@ -19,15 +19,19 @@ const responseSchema = new Schema({
   rq1: {
     group: String,
     emotionSort: String,
-    responses: Schema.Types.Array,
+    // responses: Schema.Types.Array,
+    responses: Schema.Types.Mixed,
     accounts: Schema.Types.Array,
   },
   rq2: {
     group: String,
-    responses: Schema.Types.Array,
+    // responses: Schema.Types.Array,
+    responses: Schema.Types.Mixed,
     people: Schema.Types.Array,
   },
   task: Schema.Types.Number,
 });
+
+// const Response = mongoose.model("tresponse", responseSchema);
 
 module.exports = responseSchema;

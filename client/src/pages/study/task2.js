@@ -78,7 +78,11 @@ const Task2Page = (props) => {
 
   const handleAddMoreClick = () => {
     if (tweetResponses[answerCount]) {
-      setAnswerCount(answerCount + 1);
+      if (tweetResponses[answerCount].CI) {
+        setAnswerCount(answerCount + 1);
+      } else {
+        setOpenAlert(true);
+      }
     } else {
       setOpenAlert(true);
     }
@@ -254,7 +258,7 @@ const Task2Page = (props) => {
       <AlertDialog
         open={openAlert}
         onClose={handleCloseAlert}
-        message="Please make a decision about the previous tweet to be able to see more!"
+        message="Please provide your belief and uncertainty about the last tweet! Do not double click! Even a really small uncertainty range would work, but no range would not."
       ></AlertDialog>
       <AlertDialog
         open={openAlertAnswerCount}
