@@ -104,6 +104,57 @@ router.get("/consent", (req, res) => {
 });
 
 const getPersonAssignment = () => {
+  const groups = ["happy", "angry", "noImage"];
+  const clusterNames = [
+    [129, "Donald Trump", "I"],
+    [111, "Vladimir Putin", "J"],
+    [122, "Theresa May", "K"],
+    [100, "Hillary Clinton", "L"],
+    [54, "Emanuel Macron", "M"],
+    [126, "Angela Merkel", "N"],
+    [117, "Barack Obama", "O"],
+    [132, "Kim Jong-un", "P"],
+  ];
+  //test
+  let group = choose(groups);
+  // let group = "image";
+  let clusterNamesCopy = shuffle([...clusterNames]);
+  let personAssignments;
+  // let imageIndexes = ["happy_img_idx", "angry_img_idx"];
+  if (group === "happy") {
+    personAssignments = clusterNamesCopy.map((person, index) => {
+      return {
+        person: person[1],
+        accAlias: person[2],
+        personCluster: person[0],
+        showImage: true,
+        imageIdx: "happy_img_idx",
+      };
+    });
+  } else if (group == "angry") {
+    personAssignments = clusterNamesCopy.map((person, index) => {
+      return {
+        person: person[1],
+        accAlias: person[2],
+        personCluster: person[0],
+        showImage: true,
+        imageIdx: "angry_img_idx",
+      };
+    });
+  } else {
+    personAssignments = clusterNamesCopy.map((person) => {
+      return {
+        person: person[1],
+        accAlias: person[2],
+        personCluster: person[0],
+        showImage: false,
+      };
+    });
+  }
+  return [shuffle(personAssignments), group];
+};
+
+const getPersonAssignmentOld = () => {
   const groups = ["image", "noImage"];
   const clusterNames = [
     [129, "Donald Trump", "I"],

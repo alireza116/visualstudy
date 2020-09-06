@@ -122,10 +122,10 @@ router.post("/data", (req, res) => {
 
 router.post("/response", function (req, res) {
   // console.log(req.body);
+  console.log(req.session.personIndex);
   let usertoken = req.session.usertoken;
   let update = {};
   update[`rq2.responses.${req.session.personIndex}`] = req.body;
-  let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
     // {
@@ -136,7 +136,7 @@ router.post("/response", function (req, res) {
     },
     (err, doc) => {
       if (err) res.status(404).send("error");
-      else res.status(200).send();
+      else res.status(200).send("success");
     }
   );
 });

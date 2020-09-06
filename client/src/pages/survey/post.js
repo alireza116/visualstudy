@@ -44,14 +44,14 @@ const PostSurveyPage = (props) => {
         type: "comment",
         name: "attention1",
         title:
-          'Imagine you found yourself in the following situation: "On the morning of an important job interview, you wake up with fever and chills."',
+          'Imagine you found yourself in the following situation: "On the morning of an important job interview, you wake up with fever and chills." \n What is a potential course of action that you could take in this situation?',
         isRequired: true,
       },
       {
         type: "comment",
         name: "attention2",
         title:
-          'Imagine you found yourself in the following situation: "You stop by a store to grab an item you need. You are in a hurry but the cashier is nowhere to be found."',
+          'Imagine you found yourself in the following situation: "You stop by a store to grab an item you need. You are in a hurry but the cashier is nowhere to be found.". \n What is a potential course of action that you could take in this situation?',
         isRequired: true,
       },
     ],

@@ -52,7 +52,6 @@ router.post("/response", function (req, res) {
   // console.log(req.body);
   let update = {};
   update[`rq1.responses.${req.session.accIndex}`] = req.body;
-  console.log(update);
   let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
@@ -98,13 +97,13 @@ function shuffle(array) {
 
 function getDataNoBlock(data, emotion, blockSize) {
   let happy = data.filter((x) => x["selection"] == "happy");
-  happy = happy.sort((a, b) => {
-    return +b["dpfc_happy"] - +a["dpfc_happy"];
-  });
+  // happy = happy.sort((a, b) => {
+  //   return +b["dpfc_happy"] - +a["dpfc_happy"];
+  // });
   let angry = data.filter((x) => x["selection"] == "angry");
-  angry = angry.sort((a, b) => {
-    return +b["dpfc_angry"] - +a["dpfc_angry"];
-  });
+  // angry = angry.sort((a, b) => {
+  //   return +b["dpfc_angry"] - +a["dpfc_angry"];
+  // });
   let outputData = [];
   // for (let i = 0; i < happy.length; i = i + blockSize) {
   //   if (emotion == "happy") {
