@@ -52,6 +52,11 @@ router.post("/response", function (req, res) {
   // console.log(req.body);
   let update = {};
   update[`rq1.responses.${req.session.accIndex}`] = req.body;
+  if (req.session.accIndex == 7) {
+    req.session.completed = true;
+  }
+  console.log(req.session.accIndex);
+  console.log(req.session.completed);
   let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },

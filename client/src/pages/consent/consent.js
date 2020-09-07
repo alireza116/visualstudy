@@ -232,6 +232,12 @@ const Consent = (props) => {
         <span></span> Print a copy of this page
       </Button>
       <hr />
+
+      <p style={{ color: "red" }}>
+        Please do not skip pages, hit refresh or the back button. You might lose
+        progress and not receive a token. Your compensation is contingent upon
+        successful entry of the token!
+      </p>
       <div
         style={{
           textAlign: "center",

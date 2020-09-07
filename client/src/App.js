@@ -27,7 +27,7 @@ class App extends React.Component {
     answerCount: 0,
     accIndex: null,
     personIndex: null,
-    task: 2,
+    task: 1,
   };
 
   // componentWillMount() {

@@ -126,6 +126,10 @@ router.post("/response", function (req, res) {
   let usertoken = req.session.usertoken;
   let update = {};
   update[`rq2.responses.${req.session.personIndex}`] = req.body;
+  if (req.session.accIndex == 7) {
+    req.session.completed = true;
+  }
+  console.log(req.session.completed);
   Response.findOneAndUpdate(
     { usertoken: usertoken },
     // {

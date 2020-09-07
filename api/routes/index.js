@@ -22,10 +22,12 @@ router.post("/preq", (req, res) => {
 });
 
 router.get("/debrief", (req, res) => {
-  if (true) {
+  if (req.session.completed) {
     res.status(200).json({ token: req.session.usertoken });
   } else {
-    res.status(404).send("Please complete the study first");
+    res.status(200).send({
+      token: "you have skiped pages. Please complete the study first.",
+    });
   }
 });
 
@@ -61,6 +63,7 @@ router.get("/consent", (req, res) => {
     req.session.task = 1;
     let usertoken = randomstring.generate(8);
     let [accounts, accGroup, emotionSort] = getAccAssignments();
+    req.session.completed = false;
     req.session.accounts = accounts;
     req.session.usertoken = usertoken;
     req.session.accIndex = 0;
@@ -154,55 +157,6 @@ const getPersonAssignment = () => {
   return [shuffle(personAssignments), group];
 };
 
-const getPersonAssignmentOld = () => {
-  const groups = ["image", "noImage"];
-  const clusterNames = [
-    [129, "Donald Trump", "I"],
-    [111, "Vladimir Putin", "J"],
-    [122, "Theresa May", "K"],
-    [100, "Hillary Clinton", "L"],
-    [54, "Emanuel Macron", "M"],
-    [126, "Angela Merkel", "N"],
-    [117, "Barack Obama", "O"],
-    [132, "Kim Jong-un", "P"],
-  ];
-  //test
-  let group = choose(groups);
-  // let group = "image";
-  let clusterNamesCopy = shuffle([...clusterNames]);
-  let personAssignments;
-  // let imageIndexes = ["happy_img_idx", "angry_img_idx"];
-  if (group === "image") {
-    personAssignments = clusterNamesCopy.map((person, index) => {
-      return index < 4
-        ? {
-            person: person[1],
-            accAlias: person[2],
-            personCluster: person[0],
-            showImage: true,
-            imageIdx: "happy_img_idx",
-          }
-        : {
-            person: person[1],
-            accAlias: person[2],
-            personCluster: person[0],
-            showImage: true,
-            imageIdx: "angry_img_idx",
-          };
-    });
-  } else {
-    personAssignments = clusterNamesCopy.map((person) => {
-      return {
-        person: person[1],
-        accAlias: person[2],
-        personCluster: person[0],
-        showImage: false,
-      };
-    });
-  }
-  return [shuffle(personAssignments), group];
-};
-
 const getAccAssignments = () => {
   let groups = ["happy", "angry", "mixed"];
   // let emotionSorts = ["angry", "happy"];
@@ -278,7 +232,13 @@ const getAccAssignments = () => {
 //   accAssignmentsTest[getAccAssignments()[1]]++;
 // }
 
+// personAssignmentTest = { happy: 0, angry: 0, noImage: 0 };
+// for (var i = 0; i <= 1000; i++) {
+//   personAssignmentTest[getPersonAssignment()[1]]++;
+// }
+
 // console.log(accAssignmentsTest);
+// console.log(personAssignmentTest);
 
 const getAccAssignmentsOld2 = () => {
   let groups = ["block", "mixed"];
@@ -414,6 +374,55 @@ const getAccAssignmentsOld = () => {
     });
   }
   return [shuffle(accAssignments), group];
+};
+
+const getPersonAssignmentOld = () => {
+  const groups = ["image", "noImage"];
+  const clusterNames = [
+    [129, "Donald Trump", "I"],
+    [111, "Vladimir Putin", "J"],
+    [122, "Theresa May", "K"],
+    [100, "Hillary Clinton", "L"],
+    [54, "Emanuel Macron", "M"],
+    [126, "Angela Merkel", "N"],
+    [117, "Barack Obama", "O"],
+    [132, "Kim Jong-un", "P"],
+  ];
+  //test
+  let group = choose(groups);
+  // let group = "image";
+  let clusterNamesCopy = shuffle([...clusterNames]);
+  let personAssignments;
+  // let imageIndexes = ["happy_img_idx", "angry_img_idx"];
+  if (group === "image") {
+    personAssignments = clusterNamesCopy.map((person, index) => {
+      return index < 4
+        ? {
+            person: person[1],
+            accAlias: person[2],
+            personCluster: person[0],
+            showImage: true,
+            imageIdx: "happy_img_idx",
+          }
+        : {
+            person: person[1],
+            accAlias: person[2],
+            personCluster: person[0],
+            showImage: true,
+            imageIdx: "angry_img_idx",
+          };
+    });
+  } else {
+    personAssignments = clusterNamesCopy.map((person) => {
+      return {
+        person: person[1],
+        accAlias: person[2],
+        personCluster: person[0],
+        showImage: false,
+      };
+    });
+  }
+  return [shuffle(personAssignments), group];
 };
 
 function choose(choices) {
