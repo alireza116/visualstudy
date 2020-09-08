@@ -6,7 +6,7 @@ const responseSchema = require("../models/response");
 const randomstring = require("randomstring");
 // API calls
 
-const Response = mongoose.model("tresponse", responseSchema);
+const Response = mongoose.model("s1response", responseSchema);
 
 router.post("/preq", (req, res) => {
   console.log(req.body);

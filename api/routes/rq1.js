@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 const responseSchema = require("../models/response");
 
-const Response = mongoose.model("tresponse", responseSchema);
+const Response = mongoose.model("s1response", responseSchema);
 
 router.post("/data", (req, res) => {
   let accIndex = req.body.accIndex;
