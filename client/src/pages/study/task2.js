@@ -258,7 +258,7 @@ const Task2Page = (props) => {
       <AlertDialog
         open={openAlert}
         onClose={handleCloseAlert}
-        message="Please provide your belief and uncertainty about the last tweet! Do not double click! Even a really small uncertainty range would work, but no range would not."
+        message="Please provide your belief and uncertainty about the last tweet! Do not double click! Even a really small uncertainty range would work, but no range would not. Click Reset on your last response and try again!"
       ></AlertDialog>
       <AlertDialog
         open={openAlertAnswerCount}

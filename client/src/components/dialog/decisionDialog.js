@@ -19,13 +19,33 @@ const DecisionDialog = (props) => {
   };
 
   const handleResponseTrustworthy = (response, index) => {
-    if (response) response.index = index;
-    setTrustworthyChoice(response);
+    if (response) {
+      response.index = index;
+      if (response.CI) {
+        setTrustworthyChoice(response);
+      } else {
+        alert(
+          "please do not double click and provide your uncertainty range. Click reset and try again!"
+        );
+      }
+    } else {
+      setTrustworthyChoice(null);
+    }
   };
 
   const handleResponseStance = (response, index) => {
-    if (response) response.index = index;
-    setPoliticalStanceChoice(response);
+    if (response) {
+      response.index = index;
+      if (response.CI) {
+        setPoliticalStanceChoice(response);
+      } else {
+        alert(
+          "please do not double click and provide your uncertainty range. Click reset and try again!"
+        );
+      }
+    } else {
+      setPoliticalStanceChoice(null);
+    }
   };
 
   const onComplete = (survey, options) => {
