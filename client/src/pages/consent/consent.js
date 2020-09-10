@@ -178,11 +178,16 @@ const Consent = (props) => {
       </p>
 
       <h2>Will I receive an incentive for taking part in this study?</h2>
-      <p>
+      <p>There will be no incentive for you participation</p>
+      {/* <p>
         You will receive a minimum payment of $1.00 through Amazon Mechanical
         Turk upon completion of the study. If you decide to withdraw from the
         study prior to completion you will not be eligible for payment.
       </p>
+      <p style={{ fontWeight: "bold", color: "red" }}>
+        You will receive an extra $1.00 in bonuses based on your performance in
+        evaluating the different sources in this study.
+      </p> */}
 
       <h2>What are my rights if I take part in this study?</h2>
       <p>

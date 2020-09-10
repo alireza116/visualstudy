@@ -7,7 +7,12 @@ const mongoose = require("mongoose");
 
 const responseSchema = require("../models/response");
 
-const Response = mongoose.model("s1response", responseSchema);
+let test = false;
+let collection;
+if (test) collection = "tresponse";
+else collection = "s1v2response";
+
+const Response = mongoose.model(collection, responseSchema);
 
 router.post("/data", (req, res) => {
   let accIndex = req.body.accIndex;

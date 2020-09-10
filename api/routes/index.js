@@ -5,8 +5,12 @@ const responseSchema = require("../models/response");
 // const Response = require("../models/response");
 const randomstring = require("randomstring");
 // API calls
+let test = false;
+let collection;
+if (test) collection = "tresponse";
+else collection = "s1v2response";
 
-const Response = mongoose.model("s1response", responseSchema);
+const Response = mongoose.model(collection, responseSchema);
 
 router.post("/preq", (req, res) => {
   console.log(req.body);
@@ -63,6 +67,7 @@ router.get("/consent", (req, res) => {
     req.session.task = 1;
     let usertoken = randomstring.generate(8);
     let [accounts, accGroup, emotionSort] = getAccAssignments();
+    req.session.consent = true;
     req.session.completed = false;
     req.session.accounts = accounts;
     req.session.usertoken = usertoken;
