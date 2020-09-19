@@ -51,6 +51,7 @@ app.use(
 app.use("/api", indexRouter);
 app.use("/rq1", rq1Router);
 app.use("/rq2", rq2Router);
+
 // app.use("/api", dataRouter);
 
 if (process.env.NODE_ENV === "production") {
@@ -59,6 +60,7 @@ if (process.env.NODE_ENV === "production") {
 
   // Handle React routing, return all requests to React app
   app.get("*", function (req, res) {
+    console.log(req.params);
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }

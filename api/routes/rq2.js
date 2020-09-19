@@ -5,7 +5,7 @@ const randomstring = require("randomstring");
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
 
-let test = false;
+let test = true;
 let collection;
 if (test) collection = "tresponse";
 else collection = "s1v2response";

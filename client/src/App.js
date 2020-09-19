@@ -56,6 +56,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log("ASdasd");
     return (
       <div className="app" style={{ height: "100%", lineHeight: "150%" }}>
         <Router>

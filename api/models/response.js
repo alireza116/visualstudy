@@ -8,6 +8,9 @@ const responseSchema = new Schema({
     required: true,
     unique: true,
   },
+  sonatoken: {
+    type: String,
+  },
   accounts: Schema.Types.Mixed,
   date: {
     type: Date,

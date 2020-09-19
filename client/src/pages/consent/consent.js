@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -27,8 +28,17 @@ const useStyles = makeStyles((theme) => ({
 const Consent = (props) => {
   const d = new Date();
   const history = useHistory();
+  const location = useLocation();
+  const query = queryString.parse(location.search);
+
   const handleConsent = () => {
-    axios.get("/api/consent").then((result) => {
+    let baseQuery = `/api/consent?`;
+    if (query.id) {
+      baseQuery = `/api/consent?sona_token=${query.id}`;
+    }
+
+    console.log(baseQuery);
+    axios.get(baseQuery).then((result) => {
       //   console.log(result.data);
       console.log(props.setTaskNumber);
       console.log(result.data);

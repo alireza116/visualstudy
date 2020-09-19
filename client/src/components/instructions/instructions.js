@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography, Divider } from "@material-ui/core";
-import { ConnectionStates } from "mongoose";
+import { Divider } from "@material-ui/core";
+// import { ConnectionStates } from "mongoose";
 
 const Instructions = (props) => {
   return (

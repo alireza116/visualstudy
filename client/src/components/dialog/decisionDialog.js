@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import BinaryChoice from "../choice/binaryChoice";
-import axios from "axios";
+// import axios from "axios";
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
 

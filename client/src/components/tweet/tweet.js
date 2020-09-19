@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
-import { teal } from "@material-ui/core/colors";
+// import { teal } from "@material-ui/core/colors";
 
 var parser = new DOMParser();
 

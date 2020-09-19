@@ -5,7 +5,7 @@ const responseSchema = require("../models/response");
 // const Response = require("../models/response");
 const randomstring = require("randomstring");
 // API calls
-let test = false;
+let test = true;
 let collection;
 if (test) collection = "tresponse";
 else collection = "s1v2response";
@@ -65,6 +65,8 @@ router.post("/instructions", (req, res) => {
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
     req.session.task = 1;
+    let sona_token = req.query.sona_token;
+    console.log(sona_token);
     let usertoken = randomstring.generate(8);
     let [accounts, accGroup, emotionSort] = getAccAssignments();
     req.session.consent = true;
@@ -81,6 +83,7 @@ router.get("/consent", (req, res) => {
 
     let newResponse = new Response({
       usertoken: usertoken,
+      sonatoken: sona_token,
       "rq1.group": accGroup,
       "rq1.emotionSort": emotionSort,
       "rq1.accounts": accounts,
