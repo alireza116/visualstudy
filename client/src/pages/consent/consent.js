@@ -108,8 +108,19 @@ const Consent = (props) => {
           minutes in total.
         </li>
         <li>
-          Upon completion of the study, you will earn a minimum of $1.00 through
-          Amazon MTurk.
+          If you are viewing this study through MTURK, Upon completion of the
+          study, you will earn a minimum of $1.00 through Amazon MTurk.
+        </li>
+        <li>
+          If you are a student. If your instructor has offered extra credits for
+          the completion of this study, you can email your token at the end of
+          this study to them. The amount of extra credit is decided by your
+          instructor, we have made sure that your class offers other means of
+          obtaining extra credits if you are interested in alternative means.
+        </li>
+        <li>
+          if you are completing this study through SONA, 0.5 participation
+          credit will be assigned to you after completing the study.
         </li>
         <li>
           - Please read this form in order to decide whether to participate in

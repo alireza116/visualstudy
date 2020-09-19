@@ -65,11 +65,21 @@ const Debrief = (props) => {
       </p>
       <h3>
         Here is your token of completion. Please enter this into Amazon MTurk.
-        Do not close this page.
+        Do not close this page. If you a SONA participant, there is nothing else
+        you need to do.
       </h3>
+
       <hr />
       <h3>{token}</h3>
       <hr />
+      <p>
+        If your instructor has offered extra credits for this study, please
+        email them your unique token. We will confirm your participation by
+        cross-checking your token within our secure database if inquired by the
+        instructor. If you are participating in this study through SONA, you
+        will receive 0.5 credits for your participation. Please click on the
+        following link to be redirected back to SONA.
+      </p>
       <p>
         For questions about this research, you may contact Alireza Karduni
         (akarduni@uncc.edu) and Dr. Wenwen Dou (Wdou1@uncc.edu). If you have
