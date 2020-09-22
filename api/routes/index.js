@@ -5,7 +5,7 @@ const responseSchema = require("../models/response");
 // const Response = require("../models/response");
 const randomstring = require("randomstring");
 // API calls
-let test = true;
+let test = false;
 let collection;
 if (test) collection = "tresponse";
 else collection = "s1v2response";
