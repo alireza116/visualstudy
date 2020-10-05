@@ -127,8 +127,8 @@ const getPersonAssignment = () => {
     [132, "Kim Jong-un", "P"],
   ];
   //test
-  // let group = choose(groups);
-  let group = "noImage";
+  let group = choose(groups);
+  // let group = "noImage";
   // let group = "image";
   let clusterNamesCopy = shuffle([...clusterNames]);
   let personAssignments;
