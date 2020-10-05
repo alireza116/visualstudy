@@ -8,7 +8,7 @@ const randomstring = require("randomstring");
 let test = false;
 let collection;
 if (test) collection = "tresponse";
-else collection = "s1v2response";
+else collection = "s2response";
 
 const Response = mongoose.model(collection, responseSchema);
 
@@ -64,7 +64,7 @@ router.post("/instructions", (req, res) => {
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
-    req.session.task = 1;
+    req.session.task = 2;
     let sona_token = req.query.sona_token;
     console.log(sona_token);
     let usertoken = randomstring.generate(8);
@@ -127,7 +127,8 @@ const getPersonAssignment = () => {
     [132, "Kim Jong-un", "P"],
   ];
   //test
-  let group = choose(groups);
+  // let group = choose(groups);
+  let group = "noImage";
   // let group = "image";
   let clusterNamesCopy = shuffle([...clusterNames]);
   let personAssignments;

@@ -96,34 +96,34 @@ const Consent = (props) => {
       <h2>Important Information You Need to Know</h2>
       <ul>
         <li>
-          - The purpose of this study is to understand how users rate
-          credibility of sources based on multiple tweets on social media. In
-          this study, we have masked the names of the sources, and we are asking
-          you to read multiple tweets including text and images and assess the
-          credibility of the source of those tweets.
+          The purpose of this study is to understand how users rate credibility
+          of sources based on multiple tweets on social media. In this study, we
+          have masked the names of the sources, and we are asking you to read
+          multiple tweets including text and images and assess the credibility
+          of the source of those tweets.
         </li>
         <li>
-          - We are asking individuals who are age 18 or older and fluent in
+          We are asking individuals who are age 18 or older and fluent in
           English to participate. Participation will take approximately 30-45
           minutes in total.
         </li>
         <li>
           If you are viewing this study through MTURK, Upon completion of the
-          study, you will earn a minimum of $1.00 through Amazon MTurk.
+          study, you will earn a minimum of $2.00 through Amazon MTurk.
         </li>
-        <li>
+        {/* <li>
           If you are a student. If your instructor has offered extra credits for
           the completion of this study, you can email your token at the end of
           this study to them. The amount of extra credit is decided by your
           instructor, we have made sure that your class offers other means of
           obtaining extra credits if you are interested in alternative means.
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           if you are completing this study through SONA, 0.5 participation
           credit will be assigned to you after completing the study.
-        </li>
+        </li> */}
         <li>
-          - Please read this form in order to decide whether to participate in
+          Please read this form in order to decide whether to participate in
           this research study.
         </li>
       </ul>

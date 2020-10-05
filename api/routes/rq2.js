@@ -8,7 +8,7 @@ const responseSchema = require("../models/response");
 let test = false;
 let collection;
 if (test) collection = "tresponse";
-else collection = "s1v2response";
+else collection = "s2response";
 
 const Response = mongoose.model(collection, responseSchema);
 
