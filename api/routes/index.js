@@ -236,18 +236,18 @@ const getAccAssignments = () => {
   return [shuffle(accAssignments), group, emotionSort];
 };
 
-// accAssignmentsTest = { happy: 0, angry: 0, mixed: 0 };
-// for (var i = 0; i <= 1000; i++) {
-//   accAssignmentsTest[getAccAssignments()[1]]++;
-// }
+accAssignmentsTest = { happy: 0, angry: 0, mixed: 0 };
+for (var i = 0; i <= 1000; i++) {
+  accAssignmentsTest[getAccAssignments()[1]]++;
+}
 
-// personAssignmentTest = { happy: 0, angry: 0, noImage: 0 };
-// for (var i = 0; i <= 1000; i++) {
-//   personAssignmentTest[getPersonAssignment()[1]]++;
-// }
+personAssignmentTest = { happy: 0, angry: 0, noImage: 0 };
+for (var i = 0; i <= 1000; i++) {
+  personAssignmentTest[getPersonAssignment()[1]]++;
+}
 
-// console.log(accAssignmentsTest);
-// console.log(personAssignmentTest);
+console.log(accAssignmentsTest);
+console.log(personAssignmentTest);
 
 const getAccAssignmentsOld2 = () => {
   let groups = ["block", "mixed"];

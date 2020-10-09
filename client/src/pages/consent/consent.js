@@ -156,7 +156,7 @@ const Consent = (props) => {
         of sources of news on Twitter. After completing the task, you will be
         asked some questions about your experience as well as basic demographic
         questions (age, level of education, biological sex). Your total time
-        commitment if you choose to participate will be approximately 30-45
+        commitment if you choose to participate will be approximately 20-30
         minutes.
       </p>
 
