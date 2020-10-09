@@ -104,24 +104,25 @@ const Consent = (props) => {
         </li>
         <li>
           We are asking individuals who are age 18 or older and fluent in
-          English to participate. Participation will take approximately 30-45
+          English to participate. Participation will take approximately 20-30
           minutes in total.
         </li>
         <li>
-          If you are viewing this study through MTURK, Upon completion of the
+          If you are viewing this study through{" "}
+          <span className={classes.emph}>MTURK</span>, Upon completion of the
           study, you will earn a minimum of $2.00 through Amazon MTurk.
         </li>
-        {/* <li>
+        <li>
           If you are a student. If your instructor has offered extra credits for
           the completion of this study, you can email your token at the end of
           this study to them. The amount of extra credit is decided by your
           instructor, we have made sure that your class offers other means of
           obtaining extra credits if you are interested in alternative means.
-        </li> */}
-        {/* <li>
+        </li>
+        <li>
           if you are completing this study through SONA, 0.5 participation
           credit will be assigned to you after completing the study.
-        </li> */}
+        </li>
         <li>
           Please read this form in order to decide whether to participate in
           this research study.
