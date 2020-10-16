@@ -15,21 +15,9 @@ library(scales)
 
 df = read.csv("rq1AccResponses.csv")
 tweetsDf = read.csv("rq1TweetsResponses.csv")
-#accLabel = {
-#  "veteranstoday" : {"politicalOrientation":"left","credible":0},
-#  "amlookout" : {"politicalOrientation":"right","credible":0},
-#  "opednews" : {"politicalOrientation":"left","credible":0},
-#  "InvestWatchBlog" : {"politicalOrientation":"right","credible":0},
-#  "MotherJones" : {"politicalOrientation":"left","credible":1},
-#  "nypost" : {"politicalOrientation":"right","credible":1},
-#  "CNNPolitics" : {"politicalOrientation":"left","credible":1},
-#  "Jerusalem_Post" : {"politicalOrientation":"right","credible":1}
-  
-#}
 
-unique(df$condition_emotionSort)
 
-df$condition_emotionSort <- factor(df$condition_emotionSort, c("happy","mixed","angry"))
+df$condition_emotion <- factor(df$condition_emotionSort, c("happy","mixed","angry"))
 df$condition_account <- factor(df$condition_account,c("CNNPolitics","MotherJones","nypost","Jerusalem_Post","opednews","veteranstoday","InvestWatchBlog","amlookout"))
 df$condition_credibleLabel_cat <- sapply(df$condition_credibleLabel,function(x){
   if (x==1){ 

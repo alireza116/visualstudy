@@ -127,7 +127,14 @@ const getPersonAssignment = () => {
     [132, "Kim Jong-un", "P"],
   ];
   //test
-  let group = choose(groups);
+  // let group = choose(groups);
+  let group;
+  if (Math.random() > 0.5) {
+    group = "angry"
+  } else {
+    group = choose(["happy","noImage"])
+  }
+
   // let group = "noImage";
   // let group = "image";
   let clusterNamesCopy = shuffle([...clusterNames]);
@@ -246,8 +253,6 @@ for (var i = 0; i <= 1000; i++) {
   personAssignmentTest[getPersonAssignment()[1]]++;
 }
 
-console.log(accAssignmentsTest);
-console.log(personAssignmentTest);
 
 const getAccAssignmentsOld2 = () => {
   let groups = ["block", "mixed"];
