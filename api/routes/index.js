@@ -128,13 +128,8 @@ const getPersonAssignment = () => {
   ];
   //test
   // let group = choose(groups);
-  let group;
-  if (Math.random() > 0.5) {
-    group = "angry"
-  } else {
-    group = choose(["happy","noImage"])
-  }
-
+  let group = choose(["angry","noImage"])
+  
   // let group = "noImage";
   // let group = "image";
   let clusterNamesCopy = shuffle([...clusterNames]);
