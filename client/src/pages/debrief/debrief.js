@@ -43,7 +43,7 @@ const Debrief = (props) => {
         ></img>
       </div>
       <h1>Debriefing</h1>
-      <p>
+      {/* <p>
         <b>Principal investigator:</b> Alireza Karduni, College of Computing and
         Informatics
       </p>
@@ -54,7 +54,7 @@ const Debrief = (props) => {
       <p>
         <b>Co-PIs:</b> Dr. Doug Markant (Department of Psychological Science),
         Ryan Wesslen (College of Computing and Informatics)
-      </p>
+      </p> */}
       <p>
         Thank you for your participation! In this study, we were investigating
         how images affect your decisions about news online. In some cases, we
@@ -71,7 +71,7 @@ const Debrief = (props) => {
       <hr />
       <h3>{token}</h3>
       <hr />
-      <h3>If you a SONA participant, there is nothing else you need to do.</h3>
+      {/* <h3>If you a SONA participant, there is nothing else you need to do.</h3>
       <p>
         If your instructor has offered extra credits for this study, please
         email them your unique token. We will confirm your participation by
@@ -87,7 +87,7 @@ const Debrief = (props) => {
         information, ask questions, or discuss any concerns about this study
         with someone other than the researcher(s), please contact the Office of
         Research Protections and Integrity at 704-687-1871 or uncc-irb@uncc.edu.
-      </p>
+      </p> */}
     </Container>
   );
 };
