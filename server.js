@@ -9,7 +9,7 @@ var rq1Router = require("./api/routes/rq1");
 var rq2Router = require("./api/routes/rq2");
 const mongoose = require("mongoose");
 let config;
-// RYAN Check out this link for config vars on heroku https://devcenter.heroku.com/articles/config-vars
+
 if (process.env.NODE_ENV === "production") {
   config = {
     USERNAME: process.env.DB_USERNAME,
@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === "production") {
   config = require("./api/config/config");
 }
 // const config = require("./api/config/config");
+console.log("asd");
 
 const url = `mongodb+srv://${config.USERNAME}:${config.PASSWORD}@cluster0.7mtj9.mongodb.net/thesisstudy?retryWrites=true&w=majority`;
 
