@@ -65,10 +65,10 @@ const Consent = (props) => {
       id="consent-container"
     >
       <div style={{ textAlign: "center" }}>
-        <img
+        {/* <img
           src={process.env.PUBLIC_URL + "/university.png"}
           height="120px"
-        ></img>
+        ></img> */}
       </div>
       <h1>Consent to Participate in a Research Study</h1>
       {/* <p>
