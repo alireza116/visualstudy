@@ -47,7 +47,7 @@ const BottomNav = (props) => {
         height: props.height,
         width: "100%",
         height: "7%",
-        backgroundColor: "orange",
+        backgroundColor: "grey",
         pointerEvents: "None",
       }}
     >

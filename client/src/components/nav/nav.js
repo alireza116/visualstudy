@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
   navBar: {
     height: "100%",
-    backgroundColor: "orange",
+    backgroundColor: "grey",
   },
 }));
 
